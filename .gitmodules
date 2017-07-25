@@ -1,3 +1,0 @@
-[submodule "sub-dashboard"]
-	path = sub-dashboard
-	url = https://github.com/iseth/sub-dashboard.git
