@@ -303,8 +303,6 @@ var Actions = {
                   // console.log("redirect");
                 }
 
-                // console.log(dbxToken);
-
 /*                var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
 
                 dbx.filesListFolder({path: ''})
