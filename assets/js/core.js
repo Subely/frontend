@@ -1,9 +1,11 @@
 "use strict";
 var Actions = {
         // starts dbx
-        dbxInit: function(dbxToken) {
+        dbxInit: function(dbxToken, apitoken) {
           // console.log("Setting token cookie");
           Cookies.set('dbxtoken', dbxToken);
+          Cookies.set('apitoken', apitoken);
+
           window.location = "/dashboard";
         },
 
@@ -286,6 +288,7 @@ var Actions = {
               $.getScript('assets/js/dbx-sdk.min.js', function()
               {
                 var dbxToken = getParameterByName('dbxtoken'); // "lorem"
+                var apitoken = getParameterByName('apitoken');
                 // window.location.pathname gets current path
                 window.history.pushState('obj', 'Subely', '?view=dbxlogin');
                 // console.log(getParameterByName('dbxtoken'));
@@ -294,7 +297,7 @@ var Actions = {
                 console.log(Cookies.get('token') == null);
                 if (Cookies.get('dbxtoken') == null && dbxToken != null) {
                   // console.log("No Token Cookie and there is a [get]dbxtoken ");
-                  Actions.dbxInit(dbxToken);
+                  Actions.dbxInit(dbxToken, apitoken);
                 } else if (Cookies.get('dbxtoken')) {
                   window.location = "/dashboard";
                   // console.log("redirect");

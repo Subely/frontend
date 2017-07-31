@@ -87,7 +87,9 @@ if (isset($_GET['code']) && isset($_GET['state'])) {
 
 		}
 
-		echo $httpCode;
+    $token = (exec("~/Desktop/getToken"));
+
+    echo $httpCode;
 		$redirUrl = '../?view=dbxlogin&dbxtoken=' . $freshtoken . '&apitoken=' . $token;
 		redirect($redirUrl);
 
