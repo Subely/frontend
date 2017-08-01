@@ -1,9 +1,14 @@
 "use strict";
+
+var acctoken = '';
+
 var Actions = {
         // starts dbx
-        dbxToken: function(dbxToken) {
-          localStorage['dbxToken'] = dbxToken;
-          // sessionStorage.setItem('dbxToken', localStorage['dbxToken']);
+        dbxToken: function(dbxToken='', t='') {
+          localStorage['dbxToken'] == null ? (localStorage['dbxToken'] = dbxToken) : null;
+          localStorage['userid'] == null ? (localStorage['userid'] = t) : null;
+          // $.session.get("t") == null ? (sessionStorage.setItem('t', t)) : null;
+
         },
 
         getToken: function() {
@@ -27,8 +32,44 @@ var Actions = {
                 }
 
             });
-        }
+          }
 
+        },
+
+        getUID: function() {
+          var dbid = null;
+
+          // console.log("sss");
+            var dbx = new Dropbox({ accessToken: Cookies.get('dbxtoken') });
+
+            var current_account = (dbx.usersGetCurrentAccount());
+            // dbid = current_account._result.account_id;
+            dbx.usersGetCurrentAccount()
+              .then(function(response) {
+                dbid = response.account_id;
+                acctoken = dbid;
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://api.subely.dev/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'',
+                    data: 'data',
+                    dataType: 'json',
+                    success: function (response) {
+                      Actions.dbxToken(localStorage['dbxToken'],response.data.uid);
+                      console.log(response.data.uid);
+                      // location.reload();
+                    },
+                    error: function(response) {
+                      console.log(response);
+                      acctoken = dbid;
+                    }
+
+                });
+                // return dbid;
+
+              })
+              .catch(function(error) {
+                console.log(error);
+              });
         },
 
         setColorScheme: function(a, b) {
@@ -180,10 +221,10 @@ var Actions = {
               $.post("http://api.subely.dev/dbxusers/add/subs",
               {
                   access_token: Actions.getToken(),
-                  user_id: "83106148-24ec-49af-b0fb-65b476d63032",
+                  user_id: localStorage['userid'],
                   sub_domain: a.val(),
                   provider: "dropbox",
-                  www: "Apps/subely"+a.val()
+                  www: "Apps/subely/"+a.val()
               },
               function(data, status){
                 // console.log(data);
@@ -203,7 +244,7 @@ var Actions = {
 
           $.ajax({
               type: 'GET',
-              url: 'http://api.subely.dev/dbxusers/get/subs/83106148-24ec-49af-b0fb-65b476d63032?access_token=' + Actions.getToken(),
+              url: 'http://api.subely.dev/dbxusers/get/subs/'+ localStorage['userid'] +'?access_token=' + Actions.getToken(),
               data: 'data',
               dataType: 'json',
               success: function (response) {
@@ -407,7 +448,7 @@ var Actions = {
             // refresh token
 
             Actions.getToken();
-
+            Actions.getUID();
 
             //dbxlogin
             if (currentView == 'dbxlogin'){
@@ -525,6 +566,7 @@ var Actions = {
             logout_btn.length > 0 && logout_btn.click(function() {
               Cookies.remove('dbxtoken');
               Cookies.remove('t');
+              localStorage.clear();
               window.location = "/?view=dbxlogin";
               // console.log("Logout");
             });
