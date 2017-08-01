@@ -1,6 +1,9 @@
 <?php
+// var_dump(setcookie("TestCookie", 'sss'));
+
 use Kunnu\Dropbox\Dropbox;
 use Kunnu\Dropbox\DropboxApp;
+
 
 require_once 'header.php';
 
@@ -13,13 +16,13 @@ if (isset($_GET['code']) && isset($_GET['state'])) {
     //Fetch the AccessToken
     $accessToken = $authHelper->getAccessToken($code, $state, $callbackUrl);
 
-    $freshtoken = $accessToken->getToken();
+    $dbxtoken = $accessToken->getToken();
 
 
 // ---------------------   delete the rest and do with js ------- //
 
 		//Configure Dropbox Application
-		$user = new DropboxApp("3naerq00ohhrfbb", "fs91lwfc09ed1of", $freshtoken);
+		$user = new DropboxApp("3naerq00ohhrfbb", "fs91lwfc09ed1of", $dbxtoken);
 
 		//Configure Dropbox service
 		$dbx = new Dropbox($user);
@@ -55,10 +58,10 @@ if (isset($_GET['code']) && isset($_GET['state'])) {
 			"verified" => $account->emailIsVerified(),
 			"country" => $account->getCountry(),
 			"language" => $account->getLocale(),
-			"remember_token" => $freshtoken
+			"remember_token" => $dbxtoken
 			);
 
-			$url ="http://api.subely.dev/dbxusers";
+			$url ="http://api.subely.dev/dbxusers/add";
 
 			$options = array(
 				'http' => array(
@@ -78,13 +81,10 @@ if (isset($_GET['code']) && isset($_GET['state'])) {
 			// close the connection, release resources used
 			curl_close($ch);
 
-			// do anything you want with your response
-			var_dump($response);
-
 		}
 
-		echo $httpCode;
-		$redirUrl = '../?view=dbxlogin&dbxtoken=' . $freshtoken;
+    echo $httpCode;
+		$redirUrl = '../?view=home&dbxtoken=' . $dbxtoken;
 		redirect($redirUrl);
 
 		curl_close($handle);

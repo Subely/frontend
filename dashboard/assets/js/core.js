@@ -1,9 +1,75 @@
 "use strict";
+
+var acctoken = '';
+
 var Actions = {
         // starts dbx
-        dbxInit: function(dbxToken) {
-          localStorage['dbxToken'] = dbxToken;
-          sessionStorage.setItem('dbxToken', localStorage['dbxToken']);
+        dbxToken: function(dbxToken='', t='') {
+          localStorage['dbxToken'] == null ? (localStorage['dbxToken'] = dbxToken) : null;
+          localStorage['userid'] == null ? (localStorage['userid'] = t) : null;
+          // $.session.get("t") == null ? (sessionStorage.setItem('t', t)) : null;
+
+        },
+
+        getToken: function() {
+          var token = Cookies.get('t');
+          if (token) {
+            // console.log(token);
+            return token;
+          } else if (!token) {
+            // console.log("no token");
+            $.ajax({
+                type: 'GET',
+                url: '/auth/getToken.php',
+                data: 'data',
+                dataType: 'json',
+                success: function (response) {
+                  // console.log(response);
+                  location.reload();
+                },
+                error: function(response) {
+                  // console.log('didnt work');
+                }
+
+            });
+          }
+
+        },
+
+        getUID: function() {
+          var dbid = null;
+
+          // console.log("sss");
+            var dbx = new Dropbox({ accessToken: Cookies.get('dbxtoken') });
+
+            var current_account = (dbx.usersGetCurrentAccount());
+            // dbid = current_account._result.account_id;
+            dbx.usersGetCurrentAccount()
+              .then(function(response) {
+                dbid = response.account_id;
+                acctoken = dbid;
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://api.subely.dev/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'',
+                    data: 'data',
+                    dataType: 'json',
+                    success: function (response) {
+                      Actions.dbxToken(localStorage['dbxToken'],response.data.uid);
+                      console.log(response.data.uid);
+                      // location.reload();
+                    },
+                    error: function(response) {
+                      console.log(response);
+                      acctoken = dbid;
+                    }
+
+                });
+                // return dbid;
+
+              })
+              .catch(function(error) {
+                console.log(error);
+              });
         },
 
         setColorScheme: function(a, b) {
@@ -109,12 +175,123 @@ var Actions = {
             this.textSwiper(), this.bgSwiper(), this.typingText(),
             this.servicesSwiper(), this.productsSwiper(), this.projectsSwiper(),
             this.popUp(), this.ajaxModal(), this.forms(), this.checkLogin()
+
+            switch(currentView) {
+                case "home":
+                    Components.addSite();
+                    break;
+                case "Orange":
+                    text = "I am not a fan of orange.";
+                    break;
+                case "Apple":
+                    text = "How you like them apples?";
+                    break;
+                default:
+                    text = "I have never heard of that fruit...";
+            }
         },
+
+        addSite: function() {
+          var b = $('.add-site')
+          var a = $('#add-site');
+          a.on('keyup', function() {
+            $.ajax({
+                type: 'GET',
+                url: 'http://api.subely.dev/dbxusers/sub/verify/' + this.value,
+                data: 'data',
+                dataType: 'json',
+                success: function (response) {
+                  // console.log(response);
+                  b.text('Create Site');
+                  b.removeClass('btn-default').addClass('btn-primary');
+                  $(".site-add-message").text("This subdomain is available");
+                  $(".site-add-message").css({"color": "green"});
+                },
+                error: function(response) {
+                  b.text('Check');
+                  b.removeClass('btn-primary').addClass('btn-default');
+                  $(".site-add-message").css({"color": "red"});
+                  $(".site-add-message").text("This subdomain is not available :(");
+                  // console.log('not');
+                }
+            });
+          });
+          b.click(function(){
+              // console.log(a.val());
+              $.post("http://api.subely.dev/dbxusers/add/subs",
+              {
+                  access_token: Actions.getToken(),
+                  user_id: localStorage['userid'],
+                  sub_domain: a.val(),
+                  provider: "dropbox",
+                  www: "Apps/subely/"+a.val()
+              },
+              function(data, status){
+                // console.log(data);
+                location.reload();
+              });
+          });
+          $('#add-site').keypress(function (e) {
+            if (e.which == 13) {
+              b.click();
+              return false;
+            }
+          });
+
+        },
+
+        fillSubs: function() {
+
+          $.ajax({
+              type: 'GET',
+              url: 'http://api.subely.dev/dbxusers/get/subs/'+ localStorage['userid'] +'?access_token=' + Actions.getToken(),
+              data: 'data',
+              dataType: 'json',
+              success: function (response) {
+                // console.log(response);
+                var data = response.data;
+                  $.each(data, function(index, element) {
+                    // console.log(data[index]);
+                    $('#subs-table').after('<tr class="">laskdfjlk</tr>');
+                    var $tr = $('<tr>').append(
+                      $('<td>').html('<a href="http://'+data[index].sub_domain+'.subely.me">' + data[index].sub_domain + '.subely.me</a>'),
+                      $('<td>').html('<i class="fa fa-check" aria-hidden="true"></i>'),
+                      $('<td>').text('[' + data[index].provider + ']/' + data[index].www),
+                      $('<td>').text(moment(data[index].created_at).fromNow()),
+                      $('<td>').html($('<div style="float: right;">').html('<button data-id="'+ data[index].sub_id +'" type="button" class="btn btn-xs btn-danger delete-sub">Delete</button>'))
+                    ).appendTo('#subs-table');
+
+                    // $('body').append($('<div>', {
+                      //     text: element.name
+                      // }));
+                  });
+
+                  // delete btn
+                  var $delete_sub = $('.delete-sub');
+                  $delete_sub.on("click", function() {
+                    var current_sub = this.getAttribute('data-id');
+
+                    $.ajax({
+                        type: 'GET',
+                        url: 'http://api.subely.dev/dbxusers/delete/sub/' + current_sub + '?access_token='+Actions.getToken(),
+                        data: 'data',
+                        dataType: 'json',
+                        success: function (response) {
+                          // console.log(response);
+                          location.reload();
+                        }
+                    });
+                  });
+              }
+          });
+
+        },
+
         checkLogin: function() {
           var path = window.location.pathname;
           if (!Cookies.get('dbxtoken')){
             window.location = "../?view=dbxlogin";
-            console.log("sdf");
+            // console.log("sdf");
           }
         },
         textSwiper: function() {
@@ -230,7 +407,8 @@ var Actions = {
                 var d = $(this).attr("href");
                 return b.addClass("loading"), c.fadeIn(200), a.load(d, function(e, f) {
                     var g = $(this);
-                    console.log(d), g.waitForImages({
+                    console.log(d),
+                    g.waitForImages({
                         finished: function() {
                             a.show(0, function() {
                                 c.fadeOut(200), b.addClass("ajax-modal-open").removeClass("loading")
@@ -267,6 +445,11 @@ var Actions = {
                 $("p").toggleClass("main");
             });
 
+            // refresh token
+
+            Actions.getToken();
+            Actions.getUID();
+
             //dbxlogin
             if (currentView == 'dbxlogin'){
               $.getScript('assets/js/dbx-sdk.min.js', function()
@@ -279,10 +462,9 @@ var Actions = {
                 // "en" == userLang ? e.text(sections[a].name) : e.text(sections[a]["name-" + userLang]))
 
                 if (!localStorage['dbxToken']) {
-                  Actions.dbxInit(dbxToken);
+                  Actions.dbxToken(dbxToken);
                 }
 
-                console.log(dbxToken);
 
 /*                var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
 
@@ -296,13 +478,56 @@ var Actions = {
 */
               });
             }
+
+            // search subs
+                (function ($) {
+
+                  var $rows = $('table tr');
+                  $('#filter').keyup(function() {
+                      var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+                          reg = RegExp(val, 'i'),
+                          text;
+
+                      $rows.show().filter(function() {
+                          text = $(this).text().replace(/\s+/g, ' ');
+                          return !reg.test(text);
+                      }).hide();
+
+                      // console.log('done searching');
+
+                      if ($rows.find(':visible').length === 0) {
+                        $("#noResults").show();
+                      }
+                      else{
+                        $("#noResults").hide();
+                      }
+                  });
+
+                    $('#filter').keyup(function () {
+                        var rex = new RegExp($(this).val(), 'i');
+                        $('.searchable tr').hide();
+                        // console.log(JSON.stringify($('.searchable tr')));
+                        $('.searchable tr').filter(function () {
+                            return rex.test($(this).text());
+                        }).show();
+                    })
+
+                }(jQuery));
+
+                $('#toggle-sub-view').on('click', function(e) {
+                  $('.searchable tr').toggleClass("cell"); //you can list several class names
+                  $('thead tr').toggleClass("hidden"); //you can list several class names
+                  $('table').toggleClass("card"); //you can list several class names
+                  e.preventDefault();
+                });
+
             // Login
             var a = $("#login-form");
             a.length > 0 && a.submit(function() {
                 var a,
                     b = $(this).find(".btn-submit"),
                     c = $(this);
-                    console.log(c.valid());
+                    // console.log(c.valid());
                 return !!c.valid() && (b.addClass("loading"), $.ajax({
                         type: c.attr("method"),
                         url: c.attr("action"),
@@ -317,14 +542,14 @@ var Actions = {
                           var value = responseData.someKey;
                             setTimeout(function() {
                                 b.addClass("error")
-                                console.log("qwe");
+                                // console.log("qwe");
 
                             }, 1200)
                         },
                         success: function(c) {
-                          console.log("sdf");
+                          // console.log("sdf");
                             console.log(c), responseData = "success" != c.result ? "error" : "success", setTimeout(function() {
-                              console.log("aaaa");
+                              // console.log("aaaa");
 
                                 b.addClass(responseData)
                             }, 1200)
@@ -340,8 +565,10 @@ var Actions = {
             var logout_btn = $("#logout");
             logout_btn.length > 0 && logout_btn.click(function() {
               Cookies.remove('dbxtoken');
+              Cookies.remove('t');
+              localStorage.clear();
               window.location = "/?view=dbxlogin";
-              console.log("Logout");
+              // console.log("Logout");
             });
 
             // Signin page
@@ -559,6 +786,9 @@ window.addEventListener("popstate", function(a) {
 }),
 
 $(document).ready(function() {
+    if(currentView === 'home'){
+      Components.fillSubs();
+    }
     $("body").delegate('a[data-change-view="true"]', "click", function() {
         var a = $(this).attr("href");
         return Actions.changeView(a), !1

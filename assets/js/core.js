@@ -4,7 +4,8 @@ var Actions = {
         dbxInit: function(dbxToken) {
           // console.log("Setting token cookie");
           Cookies.set('dbxtoken', dbxToken);
-          window.location = "/dashboard";
+
+          window.location = "/dashboard/?view=home";
         },
 
         setColorScheme: function(a, b) {
@@ -113,12 +114,13 @@ var Actions = {
         },
         checkLogin: function() {
           var path = window.location.pathname;
-          
+
           if (path == '/dashboard'){
-            window.location = "/dashboard/";
+            window.location = "/dashboard/?view=home";
           }
           if (Cookies.get('dbxtoken')){
             $('#header-login-btn').html('Dashboard');
+            $('#header-login-btn').attr('href', '/dashboard/?view=home');
             // console.log("asdf");
           }
         },
@@ -281,26 +283,26 @@ var Actions = {
                 return decodeURIComponent(results[2].replace(/\+/g, " "));
             }
 
+            var dbxToken = getParameterByName('dbxtoken');
+
+            if (Cookies.get('dbxtoken') == null && dbxToken != null) {
+              // console.log("No Token Cookie and there is a [get]dbxtoken ");
+              Actions.dbxInit(dbxToken);
+            } else if (Cookies.get('dbxtoken') && dbxToken != null) {
+              window.location = "/dashboard?view=home";
+              // console.log("redirect");
+            }
+
+
             //dbxlogin
             if (currentView == 'dbxlogin'){
               $.getScript('assets/js/dbx-sdk.min.js', function()
               {
-                var dbxToken = getParameterByName('dbxtoken'); // "lorem"
                 // window.location.pathname gets current path
                 window.history.pushState('obj', 'Subely', '?view=dbxlogin');
                 // console.log(getParameterByName('dbxtoken'));
 
                 // "en" == userLang ? e.text(sections[a].name) : e.text(sections[a]["name-" + userLang]))
-                console.log(Cookies.get('token') == null);
-                if (Cookies.get('dbxtoken') == null && dbxToken != null) {
-                  // console.log("No Token Cookie and there is a [get]dbxtoken ");
-                  Actions.dbxInit(dbxToken);
-                } else if (Cookies.get('dbxtoken')) {
-                  window.location = "/dashboard";
-                  // console.log("redirect");
-                }
-
-                // console.log(dbxToken);
 
 /*                var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
 
@@ -314,6 +316,7 @@ var Actions = {
 */
               });
             }
+
             // Login
             var a = $("#login-form");
             a.length > 0 && a.submit(function() {
