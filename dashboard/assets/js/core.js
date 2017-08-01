@@ -1,9 +1,34 @@
 "use strict";
 var Actions = {
         // starts dbx
-        dbxInit: function(dbxToken) {
+        dbxToken: function(dbxToken) {
           localStorage['dbxToken'] = dbxToken;
-          sessionStorage.setItem('dbxToken', localStorage['dbxToken']);
+          // sessionStorage.setItem('dbxToken', localStorage['dbxToken']);
+        },
+
+        getToken: function() {
+          var token = Cookies.get('t');
+          if (token) {
+            // console.log(token);
+            return token;
+          } else if (!token) {
+            // console.log("no token");
+            $.ajax({
+                type: 'GET',
+                url: '/auth/getToken.php',
+                data: 'data',
+                dataType: 'json',
+                success: function (response) {
+                  // console.log(response);
+                  location.reload();
+                },
+                error: function(response) {
+                  // console.log('didnt work');
+                }
+
+            });
+        }
+
         },
 
         setColorScheme: function(a, b) {
@@ -135,7 +160,7 @@ var Actions = {
                 data: 'data',
                 dataType: 'json',
                 success: function (response) {
-                  console.log(response);
+                  // console.log(response);
                   b.text('Create Site');
                   b.removeClass('btn-default').addClass('btn-primary');
                   $(".site-add-message").text("This subdomain is available");
@@ -146,26 +171,31 @@ var Actions = {
                   b.removeClass('btn-primary').addClass('btn-default');
                   $(".site-add-message").css({"color": "red"});
                   $(".site-add-message").text("This subdomain is not available :(");
-                  console.log('not');
+                  // console.log('not');
                 }
             });
           });
           b.click(function(){
-              console.log(a.val());
+              // console.log(a.val());
               $.post("http://api.subely.dev/dbxusers/add/subs",
               {
-                  access_token: "tSGmeLHfhLrc0QFWLXv7WCWRrWmPbFuAv8ldfns1",
+                  access_token: Actions.getToken(),
                   user_id: "83106148-24ec-49af-b0fb-65b476d63032",
                   sub_domain: a.val(),
                   provider: "dropbox",
-                  www: "/Apps/subely"+a.val()
+                  www: "Apps/subely"+a.val()
               },
               function(data, status){
-                console.log(data);
+                // console.log(data);
+                location.reload();
               });
           });
-
-
+          $('#add-site').keypress(function (e) {
+            if (e.which == 13) {
+              b.click();
+              return false;
+            }
+          });
 
         },
 
@@ -173,7 +203,7 @@ var Actions = {
 
           $.ajax({
               type: 'GET',
-              url: 'http://api.subely.dev/dbxusers/get/subs/83106148-24ec-49af-b0fb-65b476d63032?access_token=4kUCGwiaznaw482kWOs4sCCALJ8BANO0sD65b2aF',
+              url: 'http://api.subely.dev/dbxusers/get/subs/83106148-24ec-49af-b0fb-65b476d63032?access_token=' + Actions.getToken(),
               data: 'data',
               dataType: 'json',
               success: function (response) {
@@ -202,11 +232,11 @@ var Actions = {
 
                     $.ajax({
                         type: 'GET',
-                        url: 'http://api.subely.dev/dbxusers/delete/sub/' + current_sub + '?access_token=4kUCGwiaznaw482kWOs4sCCALJ8BANO0sD65b2aF',
+                        url: 'http://api.subely.dev/dbxusers/delete/sub/' + current_sub + '?access_token='+Actions.getToken(),
                         data: 'data',
                         dataType: 'json',
                         success: function (response) {
-                          console.log(response);
+                          // console.log(response);
                           location.reload();
                         }
                     });
@@ -220,7 +250,7 @@ var Actions = {
           var path = window.location.pathname;
           if (!Cookies.get('dbxtoken')){
             window.location = "../?view=dbxlogin";
-            console.log("sdf");
+            // console.log("sdf");
           }
         },
         textSwiper: function() {
@@ -336,7 +366,8 @@ var Actions = {
                 var d = $(this).attr("href");
                 return b.addClass("loading"), c.fadeIn(200), a.load(d, function(e, f) {
                     var g = $(this);
-                    console.log(d), g.waitForImages({
+                    console.log(d),
+                    g.waitForImages({
                         finished: function() {
                             a.show(0, function() {
                                 c.fadeOut(200), b.addClass("ajax-modal-open").removeClass("loading")
@@ -373,6 +404,11 @@ var Actions = {
                 $("p").toggleClass("main");
             });
 
+            // refresh token
+
+            Actions.getToken();
+
+
             //dbxlogin
             if (currentView == 'dbxlogin'){
               $.getScript('assets/js/dbx-sdk.min.js', function()
@@ -385,10 +421,9 @@ var Actions = {
                 // "en" == userLang ? e.text(sections[a].name) : e.text(sections[a]["name-" + userLang]))
 
                 if (!localStorage['dbxToken']) {
-                  Actions.dbxInit(dbxToken);
+                  Actions.dbxToken(dbxToken);
                 }
 
-                console.log(dbxToken);
 
 /*                var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
 
@@ -417,7 +452,7 @@ var Actions = {
                           return !reg.test(text);
                       }).hide();
 
-                      console.log('done searching');
+                      // console.log('done searching');
 
                       if ($rows.find(':visible').length === 0) {
                         $("#noResults").show();
@@ -430,7 +465,7 @@ var Actions = {
                     $('#filter').keyup(function () {
                         var rex = new RegExp($(this).val(), 'i');
                         $('.searchable tr').hide();
-                        console.log(JSON.stringify($('.searchable tr')));
+                        // console.log(JSON.stringify($('.searchable tr')));
                         $('.searchable tr').filter(function () {
                             return rex.test($(this).text());
                         }).show();
@@ -451,7 +486,7 @@ var Actions = {
                 var a,
                     b = $(this).find(".btn-submit"),
                     c = $(this);
-                    console.log(c.valid());
+                    // console.log(c.valid());
                 return !!c.valid() && (b.addClass("loading"), $.ajax({
                         type: c.attr("method"),
                         url: c.attr("action"),
@@ -466,14 +501,14 @@ var Actions = {
                           var value = responseData.someKey;
                             setTimeout(function() {
                                 b.addClass("error")
-                                console.log("qwe");
+                                // console.log("qwe");
 
                             }, 1200)
                         },
                         success: function(c) {
-                          console.log("sdf");
+                          // console.log("sdf");
                             console.log(c), responseData = "success" != c.result ? "error" : "success", setTimeout(function() {
-                              console.log("aaaa");
+                              // console.log("aaaa");
 
                                 b.addClass(responseData)
                             }, 1200)
@@ -489,8 +524,9 @@ var Actions = {
             var logout_btn = $("#logout");
             logout_btn.length > 0 && logout_btn.click(function() {
               Cookies.remove('dbxtoken');
+              Cookies.remove('t');
               window.location = "/?view=dbxlogin";
-              console.log("Logout");
+              // console.log("Logout");
             });
 
             // Signin page
