@@ -6,6 +6,13 @@ function redirect($url, $statusCode = 303)
    die();
 }
 
+if ($_SERVER['SERVER_PORT'] == 443){
+  $protocal = 'https://';
+} else {
+  $protocal = 'http://';
+}
+$apiURL = $protocal . "api.subely.dev";
+
 session_start();
 
 require_once 'vendor/autoload.php';
@@ -23,5 +30,6 @@ $dropbox = new Dropbox($app);
 $authHelper = $dropbox->getAuthHelper();
 
 //Callback URL
-$callbackUrl = "http://localhost:8080/auth/login-callback.php";
+$callbackUrl = $protocal . $_SERVER['HTTP_HOST'] . "/auth/login-callback.php";
+
 ?>

@@ -6,9 +6,8 @@ var Actions = {
         // starts dbx
         dbxToken: function(dbxToken='', t='') {
           localStorage['dbxToken'] == null ? (localStorage['dbxToken'] = dbxToken) : null;
-          localStorage['userid'] == null ? (localStorage['userid'] = t) : null;
+          Cookies.get('t') == null ? (Cookies.get('t') = t) : null;
           // $.session.get("t") == null ? (sessionStorage.setItem('t', t)) : null;
-
         },
 
         getToken: function() {
@@ -40,36 +39,38 @@ var Actions = {
           var dbid = null;
 
           // console.log("sss");
-            var dbx = new Dropbox({ accessToken: Cookies.get('dbxtoken') });
-
+          var dbx = new Dropbox({ accessToken: Cookies.get('dbxtoken') });
+          if (Cookies.get('uid') == null) {
             var current_account = (dbx.usersGetCurrentAccount());
             // dbid = current_account._result.account_id;
             dbx.usersGetCurrentAccount()
-              .then(function(response) {
-                dbid = response.account_id;
-                acctoken = dbid;
-                $.ajax({
-                    type: 'GET',
-                    url: 'http://api.subely.dev/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'',
-                    data: 'data',
-                    dataType: 'json',
-                    success: function (response) {
-                      Actions.dbxToken(localStorage['dbxToken'],response.data.uid);
-                      console.log(response.data.uid);
-                      // location.reload();
-                    },
-                    error: function(response) {
-                      console.log(response);
-                      acctoken = dbid;
-                    }
 
-                });
-                // return dbid;
+            .then(function(response) {
+              dbid = response.account_id;
+              acctoken = dbid;
+              $.ajax({
+                  type: 'GET',
+                  url: 'http://api.subely.dev/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'',
+                  data: 'data',
+                  dataType: 'json',
+                  success: function (response) {
+                    Cookies.set('uid', response.data.uid)
+                    console.log(response.data.uid);
+                    location.reload();
+                  },
+                  error: function(response) {
+                    console.log(response);
+                    acctoken = dbid;
+                  }
 
-              })
-              .catch(function(error) {
-                console.log(error);
               });
+              // return dbid;
+
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+          }
         },
 
         setColorScheme: function(a, b) {
@@ -221,7 +222,7 @@ var Actions = {
               $.post("http://api.subely.dev/dbxusers/add/subs",
               {
                   access_token: Actions.getToken(),
-                  user_id: localStorage['userid'],
+                  user_id: Cookies.get('t'),
                   sub_domain: a.val(),
                   provider: "dropbox",
                   www: "Apps/subely/"+a.val()
@@ -244,7 +245,7 @@ var Actions = {
 
           $.ajax({
               type: 'GET',
-              url: 'http://api.subely.dev/dbxusers/get/subs/'+ localStorage['userid'] +'?access_token=' + Actions.getToken(),
+              url: 'http://api.subely.dev/dbxusers/get/subs/'+ Cookies.get('t') +'?access_token=' + Actions.getToken(),
               data: 'data',
               dataType: 'json',
               success: function (response) {
@@ -282,6 +283,10 @@ var Actions = {
                         }
                     });
                   });
+              },
+              error: function(response) {
+                console.log('faileds');
+
               }
           });
 
@@ -461,9 +466,9 @@ var Actions = {
 
                 // "en" == userLang ? e.text(sections[a].name) : e.text(sections[a]["name-" + userLang]))
 
-                if (!localStorage['dbxToken']) {
-                  Actions.dbxToken(dbxToken);
-                }
+                // if (!localStorage['dbxToken']) {
+                //   Actions.dbxToken(dbxToken);
+                // }
 
 
 /*                var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
@@ -564,8 +569,10 @@ var Actions = {
 
             var logout_btn = $("#logout");
             logout_btn.length > 0 && logout_btn.click(function() {
-              Cookies.remove('dbxtoken');
               Cookies.remove('t');
+              Cookies.remove('uid');
+              Cookies.remove('dbid');
+              Cookies.remove('dbxtoken');
               localStorage.clear();
               window.location = "/?view=dbxlogin";
               // console.log("Logout");

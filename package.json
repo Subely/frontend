@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "browserify": "^14.4.0"
+  }
+}
