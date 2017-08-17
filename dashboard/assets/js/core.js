@@ -222,7 +222,7 @@ var Actions = {
               $.post("http://api.subely.dev/dbxusers/add/subs",
               {
                   access_token: Actions.getToken(),
-                  user_id: Cookies.get('t'),
+                  user_id: Cookies.get('uid'),
                   sub_domain: a.val(),
                   provider: "dropbox",
                   www: "Apps/subely/"+a.val()
@@ -245,7 +245,7 @@ var Actions = {
 
           $.ajax({
               type: 'GET',
-              url: 'http://api.subely.dev/dbxusers/get/subs/'+ Cookies.get('t') +'?access_token=' + Actions.getToken(),
+              url: 'http://api.subely.dev/dbxusers/get/subs/'+ Cookies.get('uid') +'?access_token=' + Actions.getToken(),
               data: 'data',
               dataType: 'json',
               success: function (response) {
