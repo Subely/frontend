@@ -1,9 +1,11 @@
 "use strict";
 var Actions = {
         // starts dbx
-        dbxInit: function(dbxToken) {
+        dbxInit: function(dbxToken, ttoken, dbid) {
           // console.log("Setting token cookie");
           Cookies.set('dbxtoken', dbxToken);
+          Cookies.set('t', ttoken);
+          Cookies.set('dbid', dbid);
 
           window.location = "/dashboard/?view=home";
         },
@@ -284,17 +286,19 @@ var Actions = {
             }
 
             var dbxToken = getParameterByName('dbxtoken');
+            var ttoken = getParameterByName('ttoken');
+            var dbid   = getParameterByName('dbid');
 
-            if (Cookies.get('dbxtoken') == null && dbxToken != null) {
+            if (Cookies.get('dbxtoken') == null && dbxToken != null && Cookies.get('ttoken') == null && ttoken != null && Cookies.get('t') == null && dbid != null) {
               // console.log("No Token Cookie and there is a [get]dbxtoken ");
-              Actions.dbxInit(dbxToken);
-            } else if (Cookies.get('dbxtoken') && dbxToken != null) {
-              window.location = "/dashboard?view=home";
-              // console.log("redirect");
+              // console.log("sss");
+              Actions.dbxInit(dbxToken, ttoken, dbid);
+            } else if ((Cookies.get('dbxtoken') && dbxToken != null) || (Cookies.get('ttoken') && ttoken != null) || (Cookies.get('t') && dbid != null)) {
+              // window.location = "/dashboard?view=home";
+              console.log();
             }
 
-
-            //dbxlogin
+            // dbxlogin
             if (currentView == 'dbxlogin'){
               $.getScript('assets/js/dbx-sdk.min.js', function()
               {

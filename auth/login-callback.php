@@ -6,6 +6,7 @@ use Kunnu\Dropbox\DropboxApp;
 
 
 require_once 'header.php';
+require_once 'getToken.php';
 
 
 if (isset($_GET['code']) && isset($_GET['state'])) {
@@ -19,7 +20,7 @@ if (isset($_GET['code']) && isset($_GET['state'])) {
     $dbxtoken = $accessToken->getToken();
 
 
-// ---------------------   delete the rest and do with js ------- //
+// ---------------------  @TODO delete the rest and do with js ------- //
 
 		//Configure Dropbox Application
 		$user = new DropboxApp("3naerq00ohhrfbb", "fs91lwfc09ed1of", $dbxtoken);
@@ -29,10 +30,13 @@ if (isset($_GET['code']) && isset($_GET['state'])) {
 
 		$account = $dbx->getCurrentAccount();
 
-		$email = $account->getEmail();
+    $email = $account->getEmail();
+
+    $dbid = $account->getAccountId();
+
 		// checks if user exsists
 		//-----------------
-		$url = 'http://api.subely.dev/dbxusers/verify/' . $email;
+		$url = $apiURL . '/dbxusers/verify/' . $email;
 		$handle = curl_init($url);
 		curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
 
@@ -44,8 +48,6 @@ if (isset($_GET['code']) && isset($_GET['state'])) {
 
 		if($httpCode == 404) {
 			/* Handle 404 here. */
-
-			$token = (exec("~/Desktop/getToken"));
 
 			$data = array(
 			"access_token" => $token,
@@ -61,7 +63,7 @@ if (isset($_GET['code']) && isset($_GET['state'])) {
 			"remember_token" => $dbxtoken
 			);
 
-			$url ="http://api.subely.dev/dbxusers/add";
+			$url = $apiURL . "/dbxusers/add";
 
 			$options = array(
 				'http' => array(
@@ -84,12 +86,11 @@ if (isset($_GET['code']) && isset($_GET['state'])) {
 		}
 
     echo $httpCode;
-		$redirUrl = '../?view=home&dbxtoken=' . $dbxtoken;
+
+		$redirUrl = '../?view=home&dbxtoken=' . $dbxtoken . '&ttoken=' . $token . '&dbid=' . $dbid;
 		redirect($redirUrl);
 
 		curl_close($handle);
-
-
 }
 
 ?>
