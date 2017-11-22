@@ -28,3 +28,6 @@
 - [ ] Change core.js to vue.js (react alternative)
 - [ ] Encrypt the posted password
 - [ ] Change css framework to foundation
+
+Test login:
+http://localhost:8080/?view=home&dbxtoken=QyLTYI1xVgwAAAAAAAAysfEOhek9ZCaIiAKvGZMRncMsGTwu29abaFFATlPqpnlF&ttoken=u4a8WhVOxpbghBFm76BA9UJU5fSzrsMB6iCvd2jY&dbid=dbid:AAADLQPk7PLdQk8lr_WTnCAdOnqNkWiruos

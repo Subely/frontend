@@ -24,7 +24,7 @@ var Actions = {
                 dataType: 'json',
                 success: function (response) {
                   // console.log(response);
-                  location.reload();
+//                  location.reload();
                 },
                 error: function(response) {
                   // console.log('didnt work');
@@ -56,7 +56,7 @@ var Actions = {
                   success: function (response) {
                     Cookies.set('uid', response.data.uid)
                     console.log(response.data.uid);
-                    location.reload();
+//                    location.reload();
                   },
                   error: function(response) {
                     console.log(response);
@@ -229,7 +229,7 @@ var Actions = {
               },
               function(data, status){
                 // console.log(data);
-                location.reload();
+//                location.reload();
               });
           });
           $('#add-site').keypress(function (e) {
@@ -279,14 +279,19 @@ var Actions = {
                         dataType: 'json',
                         success: function (response) {
                           // console.log(response);
-                          location.reload();
+//                          location.reload();
                         }
                     });
                   });
               },
               error: function(response) {
-                console.log('faileds');
-
+                console.log('sss');
+                Cookies.remove('t');
+                Cookies.remove('uid');
+                Cookies.remove('dbid');
+                Cookies.remove('dbxtoken');
+                localStorage.clear();
+                window.location = "/?view=dbxlogin";
               }
           });
 
