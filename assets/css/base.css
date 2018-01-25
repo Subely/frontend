@@ -7853,6 +7853,10 @@ a.icon > *:hover, a.icon > *:focus {
   background-color: #51b4e7;
 }
 
+.social-media li.instagram i:after {
+  background-color: #fb3958;
+}
+
 .social-media li.envato i:after {
   background-color: #8ec143;
 }
