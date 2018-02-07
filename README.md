@@ -3,7 +3,7 @@
 
 # Install
 ## Download this git and cd into it
-`git clone https://github.com/Subely/sub-dashboad.git && cd sub-dashboad`
+`git clone https://github.com/Subely/subely.com.git && cd subely.com`
 
 ## Then to serve the website start up a php server
 `php -S localhost:8080 -t ./`
