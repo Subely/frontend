@@ -27,4 +27,4 @@
 - [ ] Make a global footer
 - [ ] Change core.js to vue.js (react alternative)
 - [ ] Encrypt the posted password
-- [ ] Change css framework to foundation
+- [ ] Change css framework to foundation.
