@@ -13,7 +13,7 @@ if ($_SERVER['SERVER_PORT'] == 443){
 }
 
 
-
+$protocal = 'https://';
 $apiURL = $protocal."api.subely.com";
 
 session_start();
