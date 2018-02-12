@@ -34,7 +34,7 @@ $authHelper = $dropbox->getAuthHelper();
 
 //Callback URL
 
-
+var_dump($apiURL);
 
 $callbackUrl = $protocal . $_SERVER['HTTP_HOST'] . "/auth/login-callback.php";
 
