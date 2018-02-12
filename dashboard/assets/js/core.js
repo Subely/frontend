@@ -2,6 +2,8 @@
 
 var acctoken = '';
 
+var api_host = 'http://api.subely.local';
+
 var Actions = {
         // starts dbx
         dbxToken: function(dbxToken='', t='') {
@@ -50,7 +52,7 @@ var Actions = {
               acctoken = dbid;
               $.ajax({
                   type: 'GET',
-                  url: 'http://api.subely.dev/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'',
+                  url: api_host + '/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'',
                   data: 'data',
                   dataType: 'json',
                   success: function (response) {
@@ -198,7 +200,7 @@ var Actions = {
           a.on('keyup', function() {
             $.ajax({
                 type: 'GET',
-                url: 'http://api.subely.dev/dbxusers/sub/verify/' + this.value,
+                url: api_host + '/dbxusers/sub/verify/' + this.value,
                 data: 'data',
                 dataType: 'json',
                 success: function (response) {
@@ -219,7 +221,7 @@ var Actions = {
           });
           b.click(function(){
               // console.log(a.val());
-              $.post("http://api.subely.dev/dbxusers/add/subs",
+              $.post(api_host + "/dbxusers/add/subs",
               {
                   access_token: Actions.getToken(),
                   user_id: Cookies.get('uid'),
@@ -245,7 +247,7 @@ var Actions = {
 
           $.ajax({
               type: 'GET',
-              url: 'http://api.subely.dev/dbxusers/get/subs/'+ Cookies.get('uid') +'?access_token=' + Actions.getToken(),
+              url: api_host + '/dbxusers/get/subs/'+ Cookies.get('uid') +'?access_token=' + Actions.getToken(),
               data: 'data',
               dataType: 'json',
               success: function (response) {
@@ -274,7 +276,7 @@ var Actions = {
 
                     $.ajax({
                         type: 'GET',
-                        url: 'http://api.subely.dev/dbxusers/delete/sub/' + current_sub + '?access_token='+Actions.getToken(),
+                        url: api_host + '/dbxusers/delete/sub/' + current_sub + '?access_token='+Actions.getToken(),
                         data: 'data',
                         dataType: 'json',
                         success: function (response) {
