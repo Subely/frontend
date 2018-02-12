@@ -24,6 +24,15 @@ curl_setopt($cu, CURLOPT_ENCODING, '');
 curl_setopt($cu, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($cu, CURLOPT_POSTFIELDS, $logincred);
 
+	if(curl_exec($cu) === false)
+			{
+			    echo 'Curl error: ' . curl_error($handle);
+			}
+			else
+			{
+			    echo 'Operation completed without any errors';
+			} 
+
 
 // execute!
 $ress = curl_exec($cu);
