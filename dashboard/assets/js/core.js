@@ -6,10 +6,9 @@ var Actions = {
         // starts dbx
         dbxToken: function(dbxToken='', t='') {
           localStorage['dbxToken'] == null ? (localStorage['dbxToken'] = dbxToken) : null;
-          Cookies.get('t') == null ? (Cookies.get('t') = t) : null;
-          // $.session.get("t") == null ? (sessionStorage.setItem('t', t)) : null;
+         // Cookies.get('t') == null ? (Cookies.get('t') = t) : null;
+           $.session.get("t") == null ? (sessionStorage.setItem('t', t)) : null;
         },
-
         getToken: function() {
           var token = Cookies.get('t');
           if (token) {
@@ -34,7 +33,6 @@ var Actions = {
           }
 
         },
-
         getUID: function() {
           var dbid = null;
 
@@ -48,9 +46,10 @@ var Actions = {
             .then(function(response) {
               dbid = response.account_id;
               acctoken = dbid;
+              
               $.ajax({
                   type: 'GET',
-                  url: 'http://api.subely.dev/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'',
+                  url: 'http://api.subely.com/public/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'',
                   data: 'data',
                   dataType: 'json',
                   success: function (response) {
@@ -198,7 +197,7 @@ var Actions = {
           a.on('keyup', function() {
             $.ajax({
                 type: 'GET',
-                url: 'http://api.subely.dev/dbxusers/sub/verify/' + this.value,
+                url: 'http://api.subely.com/public/dbxusers/sub/verify/' + this.value,
                 data: 'data',
                 dataType: 'json',
                 success: function (response) {
@@ -219,7 +218,7 @@ var Actions = {
           });
           b.click(function(){
               // console.log(a.val());
-              $.post("http://api.subely.dev/dbxusers/add/subs",
+              $.post("http://api.subely.com/public/dbxusers/add/subs",
               {
                   access_token: Actions.getToken(),
                   user_id: Cookies.get('uid'),
@@ -245,14 +244,14 @@ var Actions = {
 
           $.ajax({
               type: 'GET',
-              url: 'http://api.subely.dev/dbxusers/get/subs/'+ Cookies.get('uid') +'?access_token=' + Actions.getToken(),
+              url: 'http://api.subely.com/public/dbxusers/get/subs/'+ Cookies.get('uid') +'?access_token=' + Actions.getToken(),
               data: 'data',
               dataType: 'json',
               success: function (response) {
-                // console.log(response);
+                 //console.log(response);
                 var data = response.data;
                   $.each(data, function(index, element) {
-                    // console.log(data[index]);
+                    //console.log(data[index]);
                     $('#subs-table').after('<tr class="">laskdfjlk</tr>');
                     var $tr = $('<tr>').append(
                       $('<td>').html('<a href="http://'+data[index].sub_domain+'.subely.me">' + data[index].sub_domain + '.subely.me</a>'),
@@ -274,7 +273,7 @@ var Actions = {
 
                     $.ajax({
                         type: 'GET',
-                        url: 'http://api.subely.dev/dbxusers/delete/sub/' + current_sub + '?access_token='+Actions.getToken(),
+                        url: 'http://api.subely.com/public/dbxusers/delete/sub/' + current_sub + '?access_token='+Actions.getToken(),
                         data: 'data',
                         dataType: 'json',
                         success: function (response) {
@@ -806,3 +805,20 @@ $(document).ready(function() {
 }), $(window).resize(function() {
     Actions.markMenuItem(currentView)
 });
+
+$(document).on('click','#check_changes',(function(){   
+            $.ajax({
+                type: 'GET',
+                url: 'http://api.subely.com/public/fetch-dropbox-changes',
+                dataType: 'json',
+                success: function (response) {
+                   console.log(response);
+                  
+                },
+                error: function(response) {
+                  console.log('didnt work');
+                }
+
+            });
+
+}));

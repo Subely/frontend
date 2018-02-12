@@ -14,16 +14,21 @@ if (isset($_GET['code']) && isset($_GET['state'])) {
     $code = $_GET['code'];
     $state = $_GET['state'];
 
+
+
     //Fetch the AccessToken
     $accessToken = $authHelper->getAccessToken($code, $state, $callbackUrl);
 
+
+
     $dbxtoken = $accessToken->getToken();
+
 
 
 // ---------------------  @TODO delete the rest and do with js ------- //
 
 		//Configure Dropbox Application
-		$user = new DropboxApp("3naerq00ohhrfbb", "fs91lwfc09ed1of", $dbxtoken);
+		$user = new DropboxApp("k5lm6p6k0gzfo14", "zw3e47ugo1pwfdp", $dbxtoken);
 
 		//Configure Dropbox service
 		$dbx = new Dropbox($user);
@@ -34,6 +39,7 @@ if (isset($_GET['code']) && isset($_GET['state'])) {
 
     $dbid = $account->getAccountId();
 
+
 		// checks if user exsists
 		//-----------------
 		$url = $apiURL . '/dbxusers/verify/' . $email;
@@ -43,8 +49,15 @@ if (isset($_GET['code']) && isset($_GET['state'])) {
 		/* Get the HTML or whatever is linked in $url. */
 		$resp = curl_exec($handle);
 
+		
+
+
 		/* Check for 404 (file not found). */
 		$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+
+
+
+
 
 		if($httpCode == 404) {
 			/* Handle 404 here. */
@@ -80,14 +93,25 @@ if (isset($_GET['code']) && isset($_GET['state'])) {
 			// execute!
 			$response = curl_exec($ch);
 
+			/*if(curl_exec($ch) === false)
+			{
+			    echo 'Curl error: ' . curl_error($handle);
+			}
+			else
+			{
+			    echo 'Operation completed without any errors';
+			} */
+
 			// close the connection, release resources used
 			curl_close($ch);
 
 		}
 
-    echo $httpCode;
+ 
 
 		$redirUrl = '../?view=home&dbxtoken=' . $dbxtoken . '&ttoken=' . $token . '&dbid=' . $dbid;
+
+
 		redirect($redirUrl);
 
 		curl_close($handle);

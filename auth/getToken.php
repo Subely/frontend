@@ -10,9 +10,7 @@ $logincred = array(
   "client_secret" => 'secret0',
   "grant_type" => 'client_credentials'
 );
-
 $loginurl = $apiURL . "/oauth/access_token";
-echo $apiURL;
 $options = array(
   'http' => array(
     'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -28,7 +26,6 @@ curl_setopt($cu, CURLOPT_POSTFIELDS, $logincred);
 // execute!
 $ress = curl_exec($cu);
 $token = json_decode($ress)->access_token;
-var_dump($token);
 
 
 ?>
