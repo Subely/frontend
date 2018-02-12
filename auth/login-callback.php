@@ -45,6 +45,7 @@ if (isset($_GET['code']) && isset($_GET['state'])) {
 		$url = $apiURL . '/dbxusers/verify/' . $email;
 		$handle = curl_init($url);
 		curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($handle, CURLOPT_ENCODING, '');
 
 		/* Get the HTML or whatever is linked in $url. */
 		$resp = curl_exec($handle);
@@ -89,6 +90,7 @@ if (isset($_GET['code']) && isset($_GET['state'])) {
 			$ch = curl_init($url);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+			curl_setopt($ch, CURLOPT_ENCODING, '');
 
 			// execute!
 			$response = curl_exec($ch);
