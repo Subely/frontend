@@ -49,7 +49,7 @@ var Actions = {
               
               $.ajax({
                   type: 'GET',
-                  url: '/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'',
+                  url: 'https://api.subely.com/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'',
                   data: 'data',
                   dataType: 'json',
                   success: function (response) {
@@ -197,7 +197,7 @@ var Actions = {
           a.on('keyup', function() {
             $.ajax({
                 type: 'GET',
-                url: '/dbxusers/sub/verify/' + this.value,
+                url: 'https://api.subely.com/dbxusers/sub/verify/' + this.value,
                 data: 'data',
                 dataType: 'json',
                 success: function (response) {
@@ -218,7 +218,7 @@ var Actions = {
           });
           b.click(function(){
               // console.log(a.val());
-              $.post("/dbxusers/add/subs",
+              $.post("https://api.subely.com/dbxusers/add/subs",
               {
                   access_token: Actions.getToken(),
                   user_id: Cookies.get('uid'),
@@ -244,7 +244,7 @@ var Actions = {
 
           $.ajax({
               type: 'GET',
-              url: '/dbxusers/get/subs/'+ Cookies.get('uid') +'?access_token=' + Actions.getToken(),
+              url: 'https://api.subely.com/dbxusers/get/subs/'+ Cookies.get('uid') +'?access_token=' + Actions.getToken(),
               data: 'data',
               dataType: 'json',
               success: function (response) {
@@ -273,7 +273,7 @@ var Actions = {
 
                     $.ajax({
                         type: 'GET',
-                        url: '/dbxusers/delete/sub/' + current_sub + '?access_token='+Actions.getToken(),
+                        url: 'https://api.subely.com/dbxusers/delete/sub/' + current_sub + '?access_token='+Actions.getToken(),
                         data: 'data',
                         dataType: 'json',
                         success: function (response) {
@@ -809,7 +809,7 @@ $(document).ready(function() {
 $(document).on('click','#check_changes',(function(){   
             $.ajax({
                 type: 'GET',
-                url: '/fetch-dropbox-changes',
+                url: 'https://api.subely.com/fetch-dropbox-changes',
                 dataType: 'json',
                 success: function (response) {
                    console.log(response);
