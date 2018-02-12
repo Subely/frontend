@@ -49,7 +49,7 @@ var Actions = {
               
               $.ajax({
                   type: 'GET',
-                  url: 'http://api.subely.com/public/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'',
+                  url: 'http://api.subely.com/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'',
                   data: 'data',
                   dataType: 'json',
                   success: function (response) {
@@ -197,7 +197,7 @@ var Actions = {
           a.on('keyup', function() {
             $.ajax({
                 type: 'GET',
-                url: 'http://api.subely.com/public/dbxusers/sub/verify/' + this.value,
+                url: 'http://api.subely.com/dbxusers/sub/verify/' + this.value,
                 data: 'data',
                 dataType: 'json',
                 success: function (response) {
@@ -218,7 +218,7 @@ var Actions = {
           });
           b.click(function(){
               // console.log(a.val());
-              $.post("http://api.subely.com/public/dbxusers/add/subs",
+              $.post("http://api.subely.com/dbxusers/add/subs",
               {
                   access_token: Actions.getToken(),
                   user_id: Cookies.get('uid'),
@@ -244,7 +244,7 @@ var Actions = {
 
           $.ajax({
               type: 'GET',
-              url: 'http://api.subely.com/public/dbxusers/get/subs/'+ Cookies.get('uid') +'?access_token=' + Actions.getToken(),
+              url: 'http://api.subely.com/dbxusers/get/subs/'+ Cookies.get('uid') +'?access_token=' + Actions.getToken(),
               data: 'data',
               dataType: 'json',
               success: function (response) {
@@ -273,7 +273,7 @@ var Actions = {
 
                     $.ajax({
                         type: 'GET',
-                        url: 'http://api.subely.com/public/dbxusers/delete/sub/' + current_sub + '?access_token='+Actions.getToken(),
+                        url: 'http://api.subely.com/dbxusers/delete/sub/' + current_sub + '?access_token='+Actions.getToken(),
                         data: 'data',
                         dataType: 'json',
                         success: function (response) {
@@ -809,7 +809,7 @@ $(document).ready(function() {
 $(document).on('click','#check_changes',(function(){   
             $.ajax({
                 type: 'GET',
-                url: 'http://api.subely.com/public/fetch-dropbox-changes',
+                url: 'http://api.subely.com/fetch-dropbox-changes',
                 dataType: 'json',
                 success: function (response) {
                    console.log(response);

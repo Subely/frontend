@@ -14,7 +14,7 @@ if ($_SERVER['SERVER_PORT'] == 443){
 
 
 
-$apiURL = $protocal."api.subely.com/public";
+$apiURL = $protocal."api.subely.com";
 
 session_start();
 
