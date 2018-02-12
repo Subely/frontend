@@ -26,7 +26,7 @@ curl_setopt($cu, CURLOPT_POSTFIELDS, $logincred);
 
 	if(curl_exec($cu) === false)
 			{
-			    echo 'Curl error: ' . curl_error($handle);
+			    echo 'Curl error: ' . curl_error($cu);
 			}
 			else
 			{
