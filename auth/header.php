@@ -13,7 +13,7 @@ if ($_SERVER['SERVER_PORT'] == 443){
 }
 
 
-
+$protocal = 'http://';
 $apiURL = $protocal."api.subely.com";
 
 session_start();
@@ -35,7 +35,7 @@ $authHelper = $dropbox->getAuthHelper();
 //Callback URL
 
 
-
+$protocal = 'https://';
 $callbackUrl = $protocal . $_SERVER['HTTP_HOST'] . "/auth/login-callback.php";
 
 ?>
