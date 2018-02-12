@@ -20,9 +20,10 @@ $options = array(
 );
 
 $cu = curl_init($loginurl);
+curl_setopt($cu, CURLOPT_ENCODING, '');
 curl_setopt($cu, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($cu, CURLOPT_POSTFIELDS, $logincred);
-curl_setopt($cu, CURLOPT_ENCODING, '');
+
 
 // execute!
 $ress = curl_exec($cu);
