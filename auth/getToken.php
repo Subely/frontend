@@ -20,18 +20,9 @@ $options = array(
 );
 
 $cu = curl_init($loginurl);
-curl_setopt($cu, CURLOPT_ENCODING, 'gzip');
 curl_setopt($cu, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($cu, CURLOPT_POSTFIELDS, $logincred);
 
-	if(curl_exec($cu) === false)
-			{
-			    echo 'Curl error: ' . curl_error($cu);
-			}
-			else
-			{
-			    echo 'Operation completed without any errors';
-			} 
 
 
 // execute!
