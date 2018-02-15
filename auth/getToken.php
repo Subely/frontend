@@ -27,7 +27,7 @@ curl_setopt($cu, CURLOPT_POSTFIELDS, $logincred);
 
 // execute!
 $ress = curl_exec($cu);
-$token = json_decode($ress)->access_token;
-
+// $token = json_decode($ress)->access_token;
+var_dump($ress);
 
 ?>
