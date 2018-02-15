@@ -603,3 +603,43 @@ $(document).ready(function() {
 $(window).resize(function() {
     Actions.markMenuItem(currentView)
 });
+
+
+
+$(document).on('click','#submit-payment',(function(e){ 
+
+e.preventDefault();
+
+var card_no = $("#card_no").val();
+var ccExpiryMonth = $("#ccExpiryMonth").val();
+var ccExpiryYear = $("#ccExpiryYear").val();
+var cvvNumber = $("#cvvNumber").val();
+var amount = $("#amount").val();
+var token = $.cookie("XSRF-TOKEN");
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost/api.subely.com/public/stripe',
+                dataType: 'json',
+                data: {
+                    "_token": token,
+                    "card_no": card_no,
+                    "ccExpiryMonth": ccExpiryMonth,
+                    "ccExpiryYear": ccExpiryYear,
+                    "cvvNumber": cvvNumber,
+                    "amount": amount,
+                },
+                success: function (response) {
+                   console.log(response);
+
+                   $('#display-response').text(response);
+                   $('#payment').modal('hide');
+                   $('#payment-response').modal('show');
+                  
+                },
+                error: function(response) {
+                  console.log(response);
+                }
+
+            });
+
+}));
