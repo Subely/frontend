@@ -23,7 +23,9 @@ require_once 'vendor/autoload.php';
 use Kunnu\Dropbox\Dropbox;
 use Kunnu\Dropbox\DropboxApp;
 
-//Configure Dropbox Application
+//Configure Dropbox Application  // 
+// Used creditionals of TMG
+
 $app = new DropboxApp("k5lm6p6k0gzfo14", "zw3e47ugo1pwfdp");
 
 //Configure Dropbox service
