@@ -604,9 +604,8 @@ $(window).resize(function() {
     Actions.markMenuItem(currentView)
 });
 
+$(document).on('click','#submit-payment',(function(e){
 
-
-$(document).on('click','#submit-payment',(function(e){ 
 
 e.preventDefault();
 
@@ -621,9 +620,9 @@ var token = $.cookie("XSRF-TOKEN");
                 url: 'https://api.subely.com/stripe',
                 headers: {
                     'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
+                    'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS'
                     'Access-Control-Allow-Credentials': 'true',
-                },
+                     },
                 dataType: 'json',
                 data: {
                     "_token": token,
@@ -642,8 +641,9 @@ var token = $.cookie("XSRF-TOKEN");
                 },
                 error: function(response) {
                   console.log(response);
-                }
+              }
 
             });
 
 }));
+
