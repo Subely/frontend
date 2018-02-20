@@ -606,8 +606,6 @@ $(window).resize(function() {
 
 
 
-
-
 $(document).on('click','#submit-payment',(function(e){ 
 
 e.preventDefault();
