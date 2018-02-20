@@ -806,6 +806,7 @@ $(document).ready(function() {
     Actions.markMenuItem(currentView)
 });
 
+
 $(document).on('click','#check_changes',(function(){   
             $.ajax({
                 type: 'GET',
