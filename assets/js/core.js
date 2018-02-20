@@ -618,7 +618,7 @@ var amount = $("#amount").val();
 var token = $.cookie("XSRF-TOKEN");
             $.ajax({
                 type: 'POST',
-                url: 'https://api.subely.com/public/stripe',
+                url: 'https://api.subely.com/stripe',
                 dataType: 'json',
                 data: {
                     "_token": token,
