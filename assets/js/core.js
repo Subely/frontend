@@ -620,7 +620,7 @@ var token = $.cookie("XSRF-TOKEN");
                 url: 'https://api.subely.com/stripe',
                 headers: {
                     'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS'
+                    'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
                     'Access-Control-Allow-Credentials': 'true',
                      },
                 dataType: 'json',
