@@ -606,6 +606,8 @@ $(window).resize(function() {
 
 
 
+
+
 $(document).on('click','#submit-payment',(function(e){ 
 
 e.preventDefault();
@@ -639,7 +641,6 @@ var token = $.cookie("XSRF-TOKEN");
                    $('#display-response').text(response);
                    $('#payment').modal('hide');
                    $('#payment-response').modal('show');
-                  
                 },
                 error: function(response) {
                   console.log(response);
