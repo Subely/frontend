@@ -813,9 +813,6 @@ $(document).on('click','#check_changes',(function(){
             $.ajax({
                 type: 'GET',
                 url: 'https://api.subely.com/fetch-dropbox-changes',
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                },
                 dataType: 'json',
                 success: function (response) {
                    console.log(response);
