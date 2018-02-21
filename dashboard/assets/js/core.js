@@ -827,3 +827,11 @@ $(document).on('click','#check_changes',(function(){
             });
 
 }));
+
+$(document).ready(function(){
+
+     var dbid = Cookies.get('dbid');
+     alert(dbid);
+
+
+});
