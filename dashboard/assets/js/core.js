@@ -834,7 +834,7 @@ $(document).ready(function(){
 
       $.ajax({
                 type: 'GET',
-                url: 'https://api.subely.com/display_name?dbid='dbid,
+                url: 'https://api.subely.com/display_name?dbid='+ dbid,
                 dataType: 'json',
                 success: function (response) {
                    console.log(response);
