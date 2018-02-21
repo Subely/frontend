@@ -816,6 +816,8 @@ $(document).on('click','#check_changes',(function(){
                 dataType: 'json',
                 success: function (response) {
                    console.log(response);
+                   $('#display-dropbox-response').text(response);
+                   $('#dropbox-response').modal('show');
                   
                 },
                 error: function(response) {
