@@ -831,7 +831,23 @@ $(document).on('click','#check_changes',(function(){
 $(document).ready(function(){
 
      var dbid = Cookies.get('dbid');
-     alert(dbid);
+
+      $.ajax({
+                type: 'GET',
+                url: 'https://api.subely.com/display_name',
+                dataType: 'json',
+                data: "dbid": dbid,
+                success: function (response) {
+                   console.log(response);
+                   $('#display-user-name').text(response);
+                  
+                },
+                error: function(response) {
+                  console.log('no display_name');
+                }
+
+            });
+
 
 
 });
