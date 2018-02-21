@@ -838,7 +838,7 @@ $(document).ready(function(){
                 dataType: 'json',
                 success: function (response) {
                    console.log(response);
-                   $('#display-user-name').text(response);
+                   $('#display-user-name').html(response + '<i class="fa fa-angle-right"></i>');
                   
                 },
                 error: function(response) {
