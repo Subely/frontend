@@ -613,6 +613,7 @@ var ccExpiryYear = $("#ccExpiryYear").val();
 var cvvNumber = $("#cvvNumber").val();
 var amount = $("#amount").val();
 var token = $.cookie("XSRF-TOKEN");
+alert(token);
             $.ajax({
                 type: 'POST',
                 url: 'https://api.subely.com/stripe',
