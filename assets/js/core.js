@@ -2,6 +2,7 @@
 var Actions = {
         // starts dbx
         dbxInit: function(dbxToken, ttoken, dbid) {
+            alert(ttoken);
           // console.log("Setting token cookie");
           Cookies.set('dbxtoken', dbxToken);
           Cookies.set('t', ttoken);
