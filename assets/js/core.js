@@ -289,7 +289,6 @@ var Actions = {
             var ttoken = getParameterByName('ttoken');
             var dbid   = getParameterByName('dbid');
 
-            alert(ttoken);
 
             if (Cookies.get('dbxtoken') == null && dbxToken != null && Cookies.get('ttoken') == null && ttoken != null && Cookies.get('t') == null && dbid != null) {
               // console.log("No Token Cookie and there is a [get]dbxtoken ");
@@ -615,7 +614,6 @@ var ccExpiryYear = $("#ccExpiryYear").val();
 var cvvNumber = $("#cvvNumber").val();
 var amount = $("#amount").val();
 var token = $.cookie("XSRF-TOKEN");
-alert(token);
             $.ajax({
                 type: 'POST',
                 url: 'https://api.subely.com/stripe',

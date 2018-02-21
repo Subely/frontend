@@ -111,10 +111,9 @@ if (isset($_GET['code']) && isset($_GET['state'])) {
 
 		$redirUrl = '../?view=home&dbxtoken=' . $dbxtoken . '&ttoken=' . $token . '&dbid=' . $dbid;
 
-		echo $redirUrl;
 
 
-		//redirect($redirUrl);
+		redirect($redirUrl);
 
 		curl_close($handle);
 }
