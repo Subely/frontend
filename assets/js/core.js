@@ -2,7 +2,6 @@
 var Actions = {
         // starts dbx
         dbxInit: function(dbxToken, ttoken, dbid) {
-            alert(ttoken);
           // console.log("Setting token cookie");
           Cookies.set('dbxtoken', dbxToken);
           Cookies.set('t', ttoken);
@@ -289,6 +288,8 @@ var Actions = {
             var dbxToken = getParameterByName('dbxtoken');
             var ttoken = getParameterByName('ttoken');
             var dbid   = getParameterByName('dbid');
+
+            alert(ttoken);
 
             if (Cookies.get('dbxtoken') == null && dbxToken != null && Cookies.get('ttoken') == null && ttoken != null && Cookies.get('t') == null && dbid != null) {
               // console.log("No Token Cookie and there is a [get]dbxtoken ");
