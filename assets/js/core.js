@@ -605,8 +605,6 @@ $(window).resize(function() {
 });
 
 $(document).on('click','#submit-payment',(function(e){
-
-
 e.preventDefault();
 
 var card_no = $("#card_no").val();
@@ -641,7 +639,7 @@ var token = $.cookie("XSRF-TOKEN");
                 },
                 error: function(response) {
                   console.log(response);
-              }
+                }
 
             });
 

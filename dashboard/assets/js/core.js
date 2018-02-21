@@ -46,6 +46,8 @@ var Actions = {
             .then(function(response) {
               dbid = response.account_id;
               acctoken = dbid;
+
+              console.log('https://api.subely.com/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'');
               
               $.ajax({
                   type: 'GET',
