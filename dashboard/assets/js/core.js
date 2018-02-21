@@ -47,7 +47,7 @@ var Actions = {
               dbid = response.account_id;
               acctoken = dbid;
 
-              console.log('https://api.subely.com/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'');
+              //console.log('https://api.subely.com/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'');
               
               $.ajax({
                   type: 'GET',
@@ -834,7 +834,7 @@ $(document).ready(function(){
 
       $.ajax({
                 type: 'GET',
-                url: 'https://api.subely.com/display_name?dbid='+ dbid + '?access_token=' + Actions.getToken()+'',
+                url: 'https://api.subely.com/display_name?dbid='+ dbid,
                 dataType: 'json',
                 success: function (response) {
                    console.log(response);
