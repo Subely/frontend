@@ -270,7 +270,7 @@ var Actions = {
 
                   $('.delete-folder-modal').click(function()
                   {
-                    var dataId = this.attr('data-id');
+                    var dataId = this.getAttribute('data-id');
                     $('.delete-sub').attr("checked", dataId);
                     $('#delete-folder').modal('show');
                   });
