@@ -875,6 +875,11 @@ $(document).ready(function(){
 });
 
 
+if (window.location.pathname) {
+    alert(window.location.pathname);
+}
+
+
 $(document).on('click','#submit-payment',(function(e){
 e.preventDefault();
 
