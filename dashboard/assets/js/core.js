@@ -256,7 +256,7 @@ var Actions = {
                     //console.log(data[index]);
                     $('#subs-table').after('<tr class="">laskdfjlk</tr>');
                     var $tr = $('<tr>').append(
-                      $('<td>').html('<a href="https://'+data[index].sub_domain+'.subely.me">' + data[index].sub_domain + '.subely.me</a>'),
+                      $('<td>').html('<a href="https://'+data[index].sub_domain+'">' + data[index].sub_domain + '</a>'),
                       $('<td>').html('<i class="fa fa-check" aria-hidden="true"></i>'),
                       $('<td>').text('[' + data[index].provider + ']/' + data[index].www),
                       $('<td>').text(moment(data[index].created_at).fromNow()),
