@@ -936,8 +936,7 @@ if (window.location == "https://subely.com/dashboard/?view=packages") {
                                                                     '1 month FREE trial</div>' +
                                                                     '</div>' +
                                                                     '</div>' +'');
-                }
-                  
+                    });
                 },
                 error: function(response) {
                   console.log('no plans available');
