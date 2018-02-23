@@ -219,7 +219,7 @@ var Actions = {
             });
           });
           b.click(function(){
-              // console.log(a.val());
+              b.text("Please Wait");
               $.post("https://api.subely.com/dbxusers/add/subs",
               {
                   access_token: Actions.getToken(),
