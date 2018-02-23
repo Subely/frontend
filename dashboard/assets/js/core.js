@@ -875,7 +875,7 @@ $(document).ready(function(){
 });
 
 
-if (window.location == "https://subely.com/dashboard/?view=packages") {
+//if (window.location == "https://subely.com/dashboard/?view=packages") {
     $(document).ready(function()
     {
 
@@ -947,7 +947,7 @@ if (window.location == "https://subely.com/dashboard/?view=packages") {
 
 
     });
-}
+//}
 
 
 $(document).on('click','#submit-payment',(function(e){
