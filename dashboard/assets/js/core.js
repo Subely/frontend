@@ -279,6 +279,7 @@ var Actions = {
                   $delete_sub.on("click", function() {
                     var current_sub = this.getAttribute('data-id');
                     var deletefromdropbox = $('#delete-dropbox-folder').val();
+                    alert(deletefromdropbox);
 
                     $.ajax({
                         type: 'GET',
