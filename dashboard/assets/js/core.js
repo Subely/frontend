@@ -220,6 +220,7 @@ var Actions = {
           });
           b.click(function(){
               b.text("Please Wait");
+              b.prop('disabled', true);
               $.post("https://api.subely.com/dbxusers/add/subs",
               {
                   access_token: Actions.getToken(),
