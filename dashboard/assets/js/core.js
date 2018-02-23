@@ -875,8 +875,8 @@ $(document).ready(function(){
 });
 
 
-if (window.location.pathname) {
-    alert(window.location.pathname);
+if (window.location) {
+    alert(window.location);
 }
 
 
