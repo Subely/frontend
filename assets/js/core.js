@@ -520,16 +520,6 @@ var titleBase = document.title,
             ajax: !1,
             external: !0
         },
-        packages: {
-            index: 7,
-            name: "Packages",
-            target: "packages.html",
-            color: "green",
-            scheme: "dark",
-            ajax: !0,
-            external: !1,
-            loaded: !1
-        }
     },
     currentView,
     query = location.search,
