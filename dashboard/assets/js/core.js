@@ -260,7 +260,7 @@ var Actions = {
                       $('<td>').html('<i class="fa fa-check" aria-hidden="true"></i>'),
                       $('<td>').text('[' + data[index].provider + ']/' + data[index].www),
                       $('<td>').text(moment(data[index].created_at).fromNow()),
-                      $('<td>').html($('<div style="float: right;">').html('<button data-id="'+ data[index].sub_id +'" type="button" class="btn btn-xs btn-danger delete-sub">Delete</button>'))
+                      $('<td>').html($('<div style="float: right;">').html('<button data-id="'+ data[index].sub_id +'" type="button" class="btn btn-xs btn-danger delete-folder-modal">Delete</button>'))
                     ).appendTo('#subs-table');
 
                     // $('body').append($('<div>', {
@@ -268,15 +268,22 @@ var Actions = {
                       // }));
                   });
 
+                  $('.delete-folder-modal').click(function()
+                  {
+                    $('#delete-folder').modal('show');
+                  });
                   // delete btn
                   var $delete_sub = $('.delete-sub');
                   $delete_sub.on("click", function() {
                     var current_sub = this.getAttribute('data-id');
+                    var deletefromdropbox = $('#delete-dropbox-folder').val();
 
                     $.ajax({
                         type: 'GET',
                         url: 'https://api.subely.com/dbxusers/delete/sub/' + current_sub + '?access_token='+Actions.getToken(),
-                        data: 'data',
+                        data: {
+                          'deletefromdropbox': deletefromdropbox,
+                        },
                         dataType: 'json',
                         success: function (response) {
                           // console.log(response);
@@ -856,7 +863,42 @@ $(document).ready(function(){
                 }
 
             });
-
-
-
 });
+
+
+$(document).on('click','#submit-payment',(function(e){
+e.preventDefault();
+
+var card_no = $("#card_no").val();
+var ccExpiryMonth = $("#ccExpiryMonth").val();
+var ccExpiryYear = $("#ccExpiryYear").val();
+var cvvNumber = $("#cvvNumber").val();
+var amount = $("#amount").val();
+var token = $.cookie("XSRF-TOKEN");
+            $.ajax({
+                type: 'POST',
+                url: 'https://api.subely.com/stripe',
+                dataType: 'json',
+                data: {
+                    "_token": token,
+                    "card_no": card_no,
+                    "ccExpiryMonth": ccExpiryMonth,
+                    "ccExpiryYear": ccExpiryYear,
+                    "cvvNumber": cvvNumber,
+                    "amount": amount,
+                },
+                success: function (response) {
+                   console.log(response);
+
+                   $('#display-response').text(response);
+                   $('#payment').modal('hide');
+                   $('#payment-response').modal('show');
+                },
+                error: function(response) {
+                  console.log(response);
+                }
+
+            });
+
+}));
+
