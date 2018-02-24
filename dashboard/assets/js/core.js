@@ -455,7 +455,7 @@ var Actions = {
                 success: function (response) {
 
                 $.each( response, function( key, value ) {
-                   $('#packages-and-plans').append('<div class="col-xs-12 col-md-4">' +
+                   $('#packages-and-plans').html('<div class="col-xs-12 col-md-4">' +
                                                     '<div class="panel panel-success">' +
                                                        '<div class="panel-heading">' +
                                                           '<h3 style="color:black;" class="panel-title">' + value.name +
@@ -946,11 +946,6 @@ $(document).ready(function(){
             });
 });
 
-$(document).on('click','#packages-link',(function(){
-
-  alert("check");
-      Components.packages();
-}));
 
 if(currentView === 'packages'){
     Components.packages();
