@@ -968,13 +968,15 @@ var ccExpiryMonth = $("#ccExpiryMonth").val();
 var ccExpiryYear = $("#ccExpiryYear").val();
 var cvvNumber = $("#cvvNumber").val();
 var token = Cookies.get('PHPSESSID');
-var package_name = $("#package-name").val();
+var user_id = Cookies.get('uid');
+var package_name = $("#package-name").val(); 
             $.ajax({
                 type: 'POST',
                 url: 'https://api.subely.com/stripe',
                 dataType: 'json',
                 data: {
                     "_token": token,
+                    "user_id": user_id,
                     "card_no": card_no,
                     "ccExpiryMonth": ccExpiryMonth,
                     "ccExpiryYear": ccExpiryYear,
