@@ -456,6 +456,14 @@ var Actions = {
                 success: function (response) {
 
                 $.each( response, function( key, value ) {
+                     if(value.price == '0.00')
+                     {
+                        var free = 'Free';
+                     }
+                     else
+                     {
+                        var free = value.price;
+                     }
                    $('#packages-and-plans').append('<div class="col-xs-12 col-md-4">' +
                                                     '<div class="panel panel-success">' +
                                                        '<div class="panel-heading">' +
@@ -464,7 +472,7 @@ var Actions = {
                                                             '</div>' +
                                                      '<div class="panel-body">' +
                                                         '<div class="the-price">' +
-                                                          '<h1> $' + value.price +
+                                                          '<h1> $' + free +
                                                             '<span class="subscript">/mo</span></h1>' +
                                                                  '<small>1 month FREE trial</small>' +
                                                               '</div>' +
