@@ -229,17 +229,20 @@ var Actions = {
                   user_id: Cookies.get('uid'),
                   sub_domain: a.val(),
                   provider: "dropbox",
-                  www: "Apps/subely/"+a.val()
+                  www: "Apps/subely/"+a.val(),
+                  error: function(response,status) {
+
+                    alert(status);
+                    if(status == 429)
+                    {
+                       $('#myModal').modal('hide');
+                       $('#limit_folders_response').text(data);
+                       $('#limit_folders').modal('show');
+                    }
+
+                  }
               },
               function(data, status){
-
-                alert(status);
-                if(status == 429)
-                {
-                   $('#myModal').modal('hide');
-                   $('#limit_folders_response').text(data);
-                   $('#limit_folders').modal('show');
-                }
                 // console.log(data);
                 location.reload();
               });
