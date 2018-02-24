@@ -232,6 +232,8 @@ var Actions = {
                   www: "Apps/subely/"+a.val()
               },
               function(data, status){
+
+                alert(status);
                 if(status == 429)
                 {
                    $('#myModal').modal('hide');
