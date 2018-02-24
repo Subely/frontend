@@ -2,6 +2,8 @@
 
 var acctoken = '';
 
+var text = '';
+
 var Actions = {
         // starts dbx
         dbxToken: function(dbxToken='', t='') {
@@ -176,8 +178,7 @@ var Actions = {
         init: function() {
             this.textSwiper(), this.bgSwiper(), this.typingText(),
             this.servicesSwiper(), this.productsSwiper(), this.projectsSwiper(),
-            this.popUp(), this.ajaxModal(), this.forms(), this.checkLogin(),
-            var text = '';
+            this.popUp(), this.ajaxModal(), this.forms(), this.checkLogin()
 
             switch(currentView) {
                 case "home":
