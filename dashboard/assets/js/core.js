@@ -450,7 +450,7 @@ var Actions = {
             })
         },
         packages: function(){
-          if(restrict < 1){
+          if($('#packages-and-plans').length < 0){
            $.ajax({
                 type: 'GET',
                 url: 'https://api.subely.com/plans',
