@@ -2,6 +2,8 @@
 
 var acctoken = '';
 
+var restrict = 0;
+
 var text = '';
 
 var Actions = {
@@ -448,6 +450,7 @@ var Actions = {
             })
         },
         packages: function(){
+          if(restrict < 1){
            $.ajax({
                 type: 'GET',
                 url: 'https://api.subely.com/plans',
@@ -455,7 +458,7 @@ var Actions = {
                 success: function (response) {
 
                 $.each( response, function( key, value ) {
-                   $('#packages-and-plans').html('<div class="col-xs-12 col-md-4">' +
+                   $('#packages-and-plans').append('<div class="col-xs-12 col-md-4">' +
                                                     '<div class="panel panel-success">' +
                                                        '<div class="panel-heading">' +
                                                           '<h3 style="color:black;" class="panel-title">' + value.name +
@@ -510,6 +513,8 @@ var Actions = {
                 error: function(response) {
                   console.log('no plans available');
                 }
+
+              }
 
             });
 
@@ -896,6 +901,7 @@ $(document).ready(function() {
         var a = $(this).attr("href");
         if(a == 'packages'){
           Components.packages();
+          restrict++;
         }
         return Actions.changeView(a), !1
     }), $("body").delegate('a[data-change-lang="true"]', "click", function() {
