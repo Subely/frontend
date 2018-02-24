@@ -221,6 +221,11 @@ var Actions = {
             });
           });
           b.click(function(){
+
+            $('#myModal').click(function(){
+               b.text("Check");
+               b.prop('disabled', false);
+            });
               b.text("Please Wait");
               b.prop('disabled', true);
               $.post("https://api.subely.com/dbxusers/add/subs",
