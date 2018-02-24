@@ -235,20 +235,20 @@ var Actions = {
                   },
                   error: function(response) {
 
-                    alert(response);
-                    if(status == 429)
+                  }
+              },
+              function(data, status){
+                    if(data == 'Your limit has been exceeded' || data == 'You need to buy a package to create your folders')
                     {
                        $('#myModal').modal('hide');
                        $('#limit_folders_response').text(data);
                        $('#limit_folders').modal('show');
                     }
-
-                  }
-              },
-              function(data, status){
-                 alert(data);
-                // console.log(data);
-               // location.reload();
+                    else
+                    {
+                      // console.log(data);
+                      location.reload();
+                    }
               });
           });
           $('#add-site').keypress(function (e) {
