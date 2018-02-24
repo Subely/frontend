@@ -177,7 +177,7 @@ var Actions = {
             this.textSwiper(), this.bgSwiper(), this.typingText(),
             this.servicesSwiper(), this.productsSwiper(), this.projectsSwiper(),
             this.popUp(), this.ajaxModal(), this.forms(), this.checkLogin(),
-            var text = ''
+            var text = '';
 
             switch(currentView) {
                 case "home":
