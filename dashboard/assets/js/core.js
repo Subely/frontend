@@ -476,7 +476,7 @@ var Actions = {
                                                                   '</tr>' +
                                                                   '<tr class="active">' +
                                                                         '<td>' +
-                                                                            '1 Project' +
+                                                                            value.folders + ' Project' +
                                                                         '</td>' +
                                                                   '</tr>' +
                                                                    '<tr>' +
