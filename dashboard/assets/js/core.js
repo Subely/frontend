@@ -502,7 +502,7 @@ var Actions = {
                                                                   '</table>' +
                                                                   '</div>' +
                                                                   '<div class="panel-footer">' +
-                                                                    '<a  class="btn btn-success" role="button" data-toggle="modal" data-target="#payment">Subscribe</a>' +
+                                                                    '<a data=' + value.name +' id="get_package_name" class="btn btn-success" role="button" data-toggle="modal" data-target="#payment">Subscribe</a>' +
                                                                     '1 month FREE trial</div>' +
                                                                     '</div>' +
                                                                     '</div>' +'');
@@ -954,6 +954,11 @@ if(currentView === 'packages'){
     Components.packages();
 }
 
+$(document).on('click','#get_package_name',function(){
+  var package_name = $(this).attr('data');
+  $('#package-name').val(package_name);
+});
+
 
 $(document).on('click','#submit-payment',(function(e){
 e.preventDefault();
@@ -965,8 +970,7 @@ var cvvNumber = $("#cvvNumber").val();
 var amount = $("#amount").val();
 var token = Cookies.get('PHPSESSID');
 var package_name = $("#package-name").val();
-alert(ccExpiryMonth);
-alert(ccExpiryYear);
+alert(package_name);
             $.ajax({
                 type: 'POST',
                 url: 'https://api.subely.com/stripe',
