@@ -234,7 +234,7 @@ var Actions = {
               function(data, status){
                 if(status == 429)
                 {
-                   b.modal('hide');
+                   $('#myModal').modal('hide');
                    $('#limit_folders_response').text(data);
                    $('#limit_folders').modal('show');
                 }
