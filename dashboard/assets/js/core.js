@@ -232,7 +232,7 @@ var Actions = {
                   www: "Apps/subely/"+a.val(),
                   error: function(response,status) {
 
-                    alert(status);
+                    alert(response);
                     if(status == 429)
                     {
                        $('#myModal').modal('hide');
