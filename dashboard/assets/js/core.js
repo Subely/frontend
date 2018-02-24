@@ -230,6 +230,9 @@ var Actions = {
                   sub_domain: a.val(),
                   provider: "dropbox",
                   www: "Apps/subely/"+a.val(),
+                  success: function (response) {
+
+                  },
                   error: function(response) {
 
                     alert(response);
