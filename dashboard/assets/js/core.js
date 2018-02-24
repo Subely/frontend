@@ -947,7 +947,7 @@ $(document).on('click','#packages-link',(function(){
 
   alert("check");
       Components.packages();
-});
+}));
 
 if(currentView === 'packages'){
     Components.packages();
