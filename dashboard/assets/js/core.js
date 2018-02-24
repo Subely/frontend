@@ -167,7 +167,6 @@ var Actions = {
                   !$("body").hasClass("home")// || !$("body").hasClass("home")
                 ) {
                 var e = b.find("li.active");
-              alert(e);
                 c.css({
                     left: e.offset().left - b.offset().left - 4 + "px",
                     width: e.width() + 8 + "px"
