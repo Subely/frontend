@@ -248,7 +248,7 @@ var Actions = {
               function(data, status){
                  alert(data);
                 // console.log(data);
-                location.reload();
+               // location.reload();
               });
           });
           $('#add-site').keypress(function (e) {
