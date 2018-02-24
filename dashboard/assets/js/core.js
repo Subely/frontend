@@ -943,7 +943,7 @@ $(document).ready(function(){
             });
 });
 
-$('#packages-link').click(function(){
+$(document).on('click','#packages-link',(function(){
 
   alert("check");
       Components.packages();
