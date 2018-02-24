@@ -464,7 +464,7 @@ var Actions = {
                                                             '</div>' +
                                                      '<div class="panel-body">' +
                                                         '<div class="the-price">' +
-                                                          '<h1>' + value.price +
+                                                          '<h1> $' + value.price +
                                                             '<span class="subscript">/mo</span></h1>' +
                                                                  '<small>1 month FREE trial</small>' +
                                                               '</div>' +
@@ -967,10 +967,8 @@ var card_no = $("#card_no").val();
 var ccExpiryMonth = $("#ccExpiryMonth").val();
 var ccExpiryYear = $("#ccExpiryYear").val();
 var cvvNumber = $("#cvvNumber").val();
-var amount = $("#amount").val();
 var token = Cookies.get('PHPSESSID');
 var package_name = $("#package-name").val();
-alert(package_name);
             $.ajax({
                 type: 'POST',
                 url: 'https://api.subely.com/stripe',
@@ -981,7 +979,6 @@ alert(package_name);
                     "ccExpiryMonth": ccExpiryMonth,
                     "ccExpiryYear": ccExpiryYear,
                     "cvvNumber": cvvNumber,
-                    "amount": amount,
                     "package_name": package_name,
                 },
                 success: function (response) {
