@@ -877,10 +877,8 @@ $(document).ready(function(){
 });
 
 
-//if (window.location == "https://subely.com/dashboard/?view=packages") {
-    $(document).ready(function()
-    {
-
+if(currentView === 'packages'){
+    $(document).ready(function(){
       $.ajax({
                 type: 'GET',
                 url: 'https://api.subely.com/plans',
@@ -949,7 +947,7 @@ $(document).ready(function(){
 
 
     });
-//}
+}
 
 
 $(document).on('click','#submit-payment',(function(e){
