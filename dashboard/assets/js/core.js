@@ -894,6 +894,9 @@ $(document).ready(function() {
     }
     $("body").delegate('a[data-change-view="true"]', "click", function() {
         var a = $(this).attr("href");
+        if(a == 'packages'){
+          Components.packages();
+        }
         return Actions.changeView(a), !1
     }), $("body").delegate('a[data-change-lang="true"]', "click", function() {
         var a = $(this).attr("data-lang");
