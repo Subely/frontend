@@ -943,6 +943,9 @@ $(document).ready(function(){
             });
 });
 
+$('.packages').click(function(){
+      Components.packages();
+});
 
 if(currentView === 'packages'){
     Components.packages();
