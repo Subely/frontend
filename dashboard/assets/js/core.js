@@ -232,6 +232,12 @@ var Actions = {
                   www: "Apps/subely/"+a.val()
               },
               function(data, status){
+                if(status == 429)
+                {
+                   b.modal('hide');
+                   $('#limit_folders_response').text(data);
+                   $('#limit_folders').modal('show');
+                }
                 // console.log(data);
                 location.reload();
               });
