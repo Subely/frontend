@@ -2,8 +2,6 @@
 
 var acctoken = '';
 
-var restrict = 0;
-
 var text = '';
 
 var Actions = {
@@ -504,7 +502,7 @@ var Actions = {
                                                                   '</table>' +
                                                                   '</div>' +
                                                                   '<div class="panel-footer">' +
-                                                                    '<a  class="btn btn-success" role="button" data-toggle="modal" data-target="#payment">Sign Up</a>' +
+                                                                    '<a  class="btn btn-success" role="button" data-toggle="modal" data-target="#payment">Subscribe</a>' +
                                                                     '1 month FREE trial</div>' +
                                                                     '</div>' +
                                                                     '</div>' +'');
@@ -901,7 +899,6 @@ $(document).ready(function() {
         var a = $(this).attr("href");
         if(a == 'packages'){
           Components.packages();
-          restrict++;
         }
         return Actions.changeView(a), !1
     }), $("body").delegate('a[data-change-lang="true"]', "click", function() {
