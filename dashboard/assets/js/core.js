@@ -944,6 +944,8 @@ $(document).ready(function(){
 });
 
 $('.packages').click(function(){
+
+  alert("check");
       Components.packages();
 });
 
