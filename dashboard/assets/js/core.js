@@ -878,7 +878,6 @@ $(document).ready(function(){
 
 
 if(currentView === 'packages'){
-    $(document).ready(function(){
       $.ajax({
                 type: 'GET',
                 url: 'https://api.subely.com/plans',
@@ -943,10 +942,6 @@ if(currentView === 'packages'){
                 }
 
             });
-
-
-
-    });
 }
 
 
