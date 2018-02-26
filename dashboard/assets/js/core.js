@@ -513,7 +513,7 @@ var Actions = {
                                                             '</div>' +
                                                      '<div class="panel-body">' +
                                                         '<div class="the-price">' +
-                                                          '<h1>' + free + '</h1><small>1 month FREE trial</small>' +
+                                                          '<h1>' + free + '</h1>' +
                                                               '</div>' +
                                                               '<table class="table">' +
                                                                  '<tr>' +
@@ -550,7 +550,7 @@ var Actions = {
                                                                   '</div>' +
                                                                   '<div class="panel-footer">' +
                                                                     subscribe_plan +
-                                                                    '1 month FREE trial</div>' +
+                                                                    '</div>' +
                                                                     '</div>' +
                                                                     '</div>' +'');
                     });
