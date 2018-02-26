@@ -241,7 +241,7 @@ var Actions = {
                     b.text("Check");
                     b.prop('disabled', false);
 
-                    if(data == 'Your limit has been exceeded' || data == 'You need to buy a package to create your folders' || data = 'Your package has been expired')
+                    if(data == 'Your limit has been exceeded' || data == 'You need to buy a package to create your folders' || data == 'Your package has been expired')
                     {
                        $('#myModal').modal('hide');
                        $('#limit_folders_response').text(data);
