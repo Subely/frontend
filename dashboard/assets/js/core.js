@@ -469,18 +469,39 @@ var Actions = {
           if($('#packages-and-plans').length < 1){
            $.ajax({
                 type: 'GET',
-                url: 'https://api.subely.com/plans',
+                url: 'https://api.subely.com/plans?uid='+Cookies.get('uid'),
                 dataType: 'json',
                 success: function (response) {
 
-                $.each( response, function( key, value ) {
+                var check_plan = response.check_plan;
+
+                $.each( response.plans, function( key, value ) {
+
+                  var subscribe_plan = '<a data=' + value.name +' id="get_package_name" class="btn btn-success" role="button" data-toggle="modal" data-target="#payment">Subscribe</a>';
+
+                  if(check_plan != null)
+                  {
+                    if(value.id == check_plan.id)
+                    {
+                       subscribe_plan = '<a data=' + value.name +' class="btn btn-success" role="button" data-toggle="modal" data-target="#payment">Subscribed</a>';
+                    }  
+                    if(value.id != check_plan.id && value.folders > check_plan.folders)
+                    {
+                       subscribe_plan = '<a data=' + value.name +' id="get_package_name" class="btn btn-success" role="button" data-toggle="modal" data-target="#payment">Upgrade</a>';
+                    }
+                    if(value.id != check_plan.id && value.folders < check_plan.folders)
+                    {
+                       subscribe_plan = '<a data=' + value.name +' id="get_package_name" class="btn btn-success" role="button" data-toggle="modal" data-target="#payment">Downgrade</a>';
+                    }
+                  }
+
                      if(value.price == '0.00')
                      {
                         var free = 'Free';
                      }
                      else
                      {
-                        var free = value.price;
+                        var free = '$ ' + value.price;
                      }
                    $('#packages-and-plans').append('<div class="col-xs-12 col-md-4">' +
                                                     '<div class="panel panel-success">' +
@@ -490,7 +511,7 @@ var Actions = {
                                                             '</div>' +
                                                      '<div class="panel-body">' +
                                                         '<div class="the-price">' +
-                                                          '<h1> $' + free +
+                                                          '<h1>' + free +
                                                             '<span class="subscript">/mo</span></h1>' +
                                                                  '<small>1 month FREE trial</small>' +
                                                               '</div>' +
