@@ -264,7 +264,7 @@ var Actions = {
         },
 
         fillSubs: function() {
-
+         if($('#subs-table').length < 1){
           $.ajax({
               type: 'GET',
               url: 'https://api.subely.com/dbxusers/get/subs/'+ Cookies.get('uid') +'?access_token=' + Actions.getToken(),
@@ -326,6 +326,8 @@ var Actions = {
 
               }
           });
+
+          }
 
         },
 
