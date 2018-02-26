@@ -549,7 +549,7 @@ var Actions = {
                                                                   '</table>' +
                                                                   '</div>' +
                                                                   '<div class="panel-footer">' +
-                                                                    '<a data=' + value.name +' id="get_package_name" class="btn btn-success" role="button" data-toggle="modal" data-target="#payment">Subscribe</a>' +
+                                                                    subscribe_plan +
                                                                     '1 month FREE trial</div>' +
                                                                     '</div>' +
                                                                     '</div>' +'');
