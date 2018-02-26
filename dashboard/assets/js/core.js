@@ -945,6 +945,10 @@ $(document).ready(function() {
         if(a == 'packages'){
           Components.packages();
         }
+        if(a == 'home')
+        {
+          Components.fillSubs();
+        }
         return Actions.changeView(a), !1
     }), $("body").delegate('a[data-change-lang="true"]', "click", function() {
         var a = $(this).attr("data-lang");
