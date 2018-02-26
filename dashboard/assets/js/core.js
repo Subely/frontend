@@ -1037,6 +1037,7 @@ alert(package_name);
                    $('#display-response').text(response);
                    $('#payment').modal('hide');
                    $('#payment-response').modal('show');
+                   location.reload();
                 },
                 error: function(response) {
                   console.log(response);
