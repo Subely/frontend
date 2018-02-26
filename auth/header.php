@@ -23,7 +23,7 @@ require_once 'vendor/autoload.php';
 use Kunnu\Dropbox\Dropbox;
 use Kunnu\Dropbox\DropboxApp;
 
-//Configure Dropbox Application  // 
+//Configure Dropbox Application  //
 // Used creditionals of TMG
 
 $app = new DropboxApp("k5lm6p6k0gzfo14", "zw3e47ugo1pwfdp");
@@ -37,5 +37,3 @@ $authHelper = $dropbox->getAuthHelper();
 //Callback URL
 
 $callbackUrl = $protocal . $_SERVER['HTTP_HOST'] . "/auth/login-callback.php";
-
-?>
