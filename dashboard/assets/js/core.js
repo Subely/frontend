@@ -1037,7 +1037,10 @@ var package_name = $("#package-name").val();
                    $('#display-response').text(response);
                    $('#payment').modal('hide');
                    $('#payment-response').modal('show');
-                   location.reload();
+                   if(response == 'Payment Successful')
+                   {
+                      location.reload();
+                   }
                 },
                 error: function(response) {
                   console.log(response);
