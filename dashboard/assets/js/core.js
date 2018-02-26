@@ -497,7 +497,7 @@ var Actions = {
 
                      if(value.price == '0.00')
                      {
-                        var free = 'Free' + '<span class="subscript">/mo</span></h1>';
+                        var free = 'Free';
                      }
                      else
                      {
