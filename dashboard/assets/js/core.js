@@ -1004,6 +1004,7 @@ if(currentView === 'packages'){
 $(document).on('click','#get_package_name',function(){
   var package_name = $(this).attr('data');
   $('#package-name').val(package_name);
+  alert(package_name);
 });
 
 
@@ -1017,7 +1018,6 @@ var cvvNumber = $("#cvvNumber").val();
 var token = Cookies.get('PHPSESSID');
 var user_id = Cookies.get('uid');
 var package_name = $("#package-name").val();
-alert(package_name);
             $.ajax({
                 type: 'POST',
                 url: 'https://api.subely.com/stripe',
