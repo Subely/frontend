@@ -483,15 +483,15 @@ var Actions = {
                   {
                     if(value.id == check_plan.id)
                     {
-                       subscribe_plan = '<a data=' + value.name +' class="btn btn-success" role="button" data-toggle="modal" data-target="#payment">Subscribed</a>';
+                       subscribe_plan = '<a data=' + value.name +' class="btn btn-success" role="button">Subscribed</a>';
                     }  
                     if(value.id != check_plan.id && value.folders > check_plan.folders)
                     {
-                       subscribe_plan = '<a data=' + value.name +' id="get_package_name" class="btn btn-primary" role="button" data-toggle="modal" data-target="#payment">Upgrade</a>';
+                       subscribe_plan = '<a data=' + value.name +' id="get_package_name" class="btn btn-info" role="button" data-toggle="modal" data-target="#payment">Upgrade</a>';
                     }
                     if(value.id != check_plan.id && value.folders < check_plan.folders)
                     {
-                       subscribe_plan = '<a data=' + value.name +' id="get_package_name" class="btn btn-danger" role="button" data-toggle="modal" data-target="#payment">Downgrade</a>';
+                       subscribe_plan = '<a data=' + value.name +' id="get_package_name" class="btn btn-warning" role="button" data-toggle="modal" data-target="#payment">Downgrade</a>';
                     }
                   }
 
