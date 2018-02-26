@@ -479,7 +479,7 @@ var Actions = {
 
                   var subscribe_plan = '<a data=' + value.name +' id="get_package_name" class="btn btn-success" role="button" data-toggle="modal" data-target="#payment">Subscribe</a>';
 
-                  if(check_plan != null)
+                  if(check_plan != 0)
                   {
                     if(value.id == check_plan.id)
                     {
