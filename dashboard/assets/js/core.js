@@ -501,7 +501,7 @@ var Actions = {
                      }
                      else
                      {
-                        var free = '$ ' + value.price + '<span class="subscript">/mo</span></h1>';
+                        var free = '$ ' + value.price + '<span class="subscript">/mo</span>';
                      }
                    $('#packages-and-plans').append('<div class="col-xs-12 col-md-4">' +
                                                     '<div class="panel panel-success">' +
@@ -511,7 +511,7 @@ var Actions = {
                                                             '</div>' +
                                                      '<div class="panel-body">' +
                                                         '<div class="the-price">' +
-                                                          '<h1>' + free + '<small>1 month FREE trial</small>' +
+                                                          '<h1>' + free + '</h1><small>1 month FREE trial</small>' +
                                                               '</div>' +
                                                               '<table class="table">' +
                                                                  '<tr>' +
