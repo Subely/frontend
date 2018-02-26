@@ -1016,7 +1016,8 @@ var ccExpiryYear = $("#ccExpiryYear").val();
 var cvvNumber = $("#cvvNumber").val();
 var token = Cookies.get('PHPSESSID');
 var user_id = Cookies.get('uid');
-var package_name = $("#package-name").val(); 
+var package_name = $("#package-name").val();
+alert(package_name);
             $.ajax({
                 type: 'POST',
                 url: 'https://api.subely.com/stripe',
