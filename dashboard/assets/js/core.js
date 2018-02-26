@@ -221,8 +221,8 @@ var Actions = {
             });
           });
           b.click(function(){
-             // b.text("Please Wait");
-             // b.prop('disabled', true);
+              b.text("Please Wait");
+              b.prop('disabled', true);
               $.post("https://api.subely.com/dbxusers/add/subs",
               {
                   access_token: Actions.getToken(),
@@ -238,7 +238,10 @@ var Actions = {
                   }
               },
               function(data, status){
-                    if(data == 'Your limit has been exceeded' || data == 'You need to buy a package to create your folders')
+                    b.text("Check");
+                    b.prop('disabled', false);
+
+                    if(data == 'Your limit has been exceeded' || data == 'You need to buy a package to create your folders' || data = 'Your package has been expired')
                     {
                        $('#myModal').modal('hide');
                        $('#limit_folders_response').text(data);
