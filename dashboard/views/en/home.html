@@ -105,19 +105,34 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Add Site</h4>
+              <div class="text-center">
+                <ul class="nav nav-pills">
+                  <li style="width: 45%;" class="active"><a style="width: 100%; padding: 0px 0px;" data-toggle="pill" href="#add_site">Add Site</a></li>
+                  <li style="width: 45%;"><a style="width: 100%; padding: 0px 0px;"  data-toggle="pill" href="#account_details">Account details</a></li>
+                </ul>        
               </div>
-              <h6 class="title col-md-8 col-md-offset-2">Subely Domain</h6>
+              </div>
               <div class="modal-body">
-                <div class="col-md-8 col-md-offset-2 input-group">
-                  <input autocomplete="off" id="add-site" type="text" class="form-control" placeholder="Sub-domain" aria-describedby="basic-addon2">
-                  <span class="input-group-addon" id="basic-addon2">.subely.me</span>
-                </div>
-                <div class="site-add-message">Enter a sub domain</div>
+                <div class="tab-content">
+                  <div id="add_site" class="tab-pane fade in active">
+                    <h6 class="title col-md-8 col-md-offset-2">Subely Domain</h6>
+                    <div class="col-md-8 col-md-offset-2 input-group">
+                      <input autocomplete="off" id="add-site" type="text" class="form-control" placeholder="Sub-domain" aria-describedby="basic-addon2">
+                      <span class="input-group-addon" id="basic-addon2">.subely.me</span>
+                    </div>
+                    <div class="site-add-message">Enter a sub domain</div>
+                    <button type="button" class="btn btn-default add-site">Check</button>
+                   </div>
+                   <div id="account_details" class="tab-pane fade">
+                        <h4><b>Host:</b> </h4>
+                        <h4><b>username:</b> </h4>
+                        <h4><b>password:</b> </h4>
+                        <h4><b>database:</b> </h4>
+                   </div>
+               </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-default add-site">Check</button>
               </div>
             </div>
 
@@ -203,13 +218,7 @@
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
   ga('create', 'UA-44410203-1', 'Subely.pl');
-  ga('send', 'pageview');
-
-
-
-
-
-         
+  ga('send', 'pageview');        
 </script>
 
 </body>

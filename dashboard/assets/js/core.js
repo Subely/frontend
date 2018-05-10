@@ -2,7 +2,7 @@
 
 var acctoken = '';
 
-var api_host = 'http://api.subely.local';
+var text = '';
 
 var Actions = {
         // starts dbx
@@ -25,7 +25,7 @@ var Actions = {
                 dataType: 'json',
                 success: function (response) {
                   // console.log(response);
-//                  location.reload();
+                  location.reload();
                 },
                 error: function(response) {
                   // console.log('didnt work');
@@ -50,16 +50,16 @@ var Actions = {
               acctoken = dbid;
 
               //console.log('https://api.subely.com/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'');
-
+              
               $.ajax({
                   type: 'GET',
-                  url: api_host + '/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'',
+                  url: 'https://api.subely.com/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'',
                   data: 'data',
                   dataType: 'json',
                   success: function (response) {
                     Cookies.set('uid', response.data.uid)
                     console.log(response.data.uid);
-//                    location.reload();
+                    location.reload();
                   },
                   error: function(response) {
                     console.log(response);
@@ -201,7 +201,7 @@ var Actions = {
           a.on('keyup', function() {
             $.ajax({
                 type: 'GET',
-                url: api_host + '/dbxusers/sub/verify/' + this.value,
+                url: 'https://api.subely.com/dbxusers/sub/verify/' + this.value,
                 data: 'data',
                 dataType: 'json',
                 success: function (response) {
@@ -221,8 +221,9 @@ var Actions = {
             });
           });
           b.click(function(){
-              // console.log(a.val());
-              $.post(api_host + "/dbxusers/add/subs",
+              b.text("Please Wait");
+              b.prop('disabled', true);
+              $.post("https://api.subely.com/dbxusers/add/subs",
               {
                   access_token: Actions.getToken(),
                   user_id: Cookies.get('uid'),
@@ -237,7 +238,10 @@ var Actions = {
                   }
               },
               function(data, status){
-                    if(data == 'Your limit has been exceeded' || data == 'You need to buy a package to create your folders')
+                    b.text("Check");
+                    b.prop('disabled', false);
+
+                    if(data == 'Your limit has been exceeded' || data == 'You need to buy a package to create your folders' || data == 'Your package has been expired')
                     {
                        $('#myModal').modal('hide');
                        $('#limit_folders_response').text(data);
@@ -260,10 +264,10 @@ var Actions = {
         },
 
         fillSubs: function() {
-
+         if($('#subs-table').length < 1){
           $.ajax({
               type: 'GET',
-              url: api_host + '/dbxusers/get/subs/'+ Cookies.get('uid') +'?access_token=' + Actions.getToken(),
+              url: 'https://api.subely.com/dbxusers/get/subs/'+ Cookies.get('uid') +'?access_token=' + Actions.getToken(),
               data: 'data',
               dataType: 'json',
               success: function (response) {
@@ -305,28 +309,25 @@ var Actions = {
 
                     $.ajax({
                         type: 'GET',
-                        url: api_host + '/dbxusers/delete/sub/' + current_sub + '?access_token='+Actions.getToken(),
+                        url: 'https://api.subely.com/dbxusers/delete/sub/' + current_sub + '?access_token='+Actions.getToken(),
                         data: {
                           'deletefromdropbox': deletefromdropbox,
                         },
                         dataType: 'json',
                         success: function (response) {
                           // console.log(response);
-//                          location.reload();
+                          location.reload();
                         }
                     });
                   });
               },
               error: function(response) {
-                console.log('sss');
-                Cookies.remove('t');
-                Cookies.remove('uid');
-                Cookies.remove('dbid');
-                Cookies.remove('dbxtoken');
-                localStorage.clear();
-                window.location = "/?view=dbxlogin";
+                console.log('faileds');
+
               }
           });
+
+          }
 
         },
 
@@ -470,18 +471,39 @@ var Actions = {
           if($('#packages-and-plans').length < 1){
            $.ajax({
                 type: 'GET',
-                url: 'https://api.subely.com/plans',
+                url: 'https://api.subely.com/plans?uid='+Cookies.get('uid'),
                 dataType: 'json',
                 success: function (response) {
 
-                $.each( response, function( key, value ) {
+                var check_plan = response.check_plan;
+
+                $.each( response.plans, function( key, value ) {
+
+                  var subscribe_plan = '<a data=' + value.name +' id="get_package_name" class="btn btn-success" role="button" data-toggle="modal" data-target="#payment">Subscribe</a>';
+
+                  if(check_plan != 0)
+                  {
+                    if(value.id == check_plan.id)
+                    {
+                       subscribe_plan = '<a data=' + value.name +' class="btn btn-success" role="button">Subscribed</a>';
+                    }  
+                    if(value.id != check_plan.id && value.folders > check_plan.folders)
+                    {
+                       subscribe_plan = '<a data=' + value.name +' id="get_package_name" class="btn btn-info" role="button" data-toggle="modal" data-target="#payment">Upgrade</a>';
+                    }
+                    if(value.id != check_plan.id && value.folders < check_plan.folders)
+                    {
+                       subscribe_plan = '<a data=' + value.name +' id="get_package_name" class="btn btn-warning" role="button" data-toggle="modal" data-target="#payment">Downgrade</a>';
+                    }
+                  }
+
                      if(value.price == '0.00')
                      {
                         var free = 'Free';
                      }
                      else
                      {
-                        var free = value.price;
+                        var free = '$ ' + value.price + '<span class="subscript">/mo</span>';
                      }
                    $('#packages-and-plans').append('<div class="col-xs-12 col-md-4">' +
                                                     '<div class="panel panel-success">' +
@@ -491,13 +513,11 @@ var Actions = {
                                                             '</div>' +
                                                      '<div class="panel-body">' +
                                                         '<div class="the-price">' +
-                                                          '<h1> $' + free +
-                                                            '<span class="subscript">/mo</span></h1>' +
-                                                                 '<small>1 month FREE trial</small>' +
+                                                          '<h1>' + free + '</h1>' +
                                                               '</div>' +
                                                               '<table class="table">' +
                                                                  '<tr>' +
-                                                                    '<td>' +
+                                                                    '<td>' + 
                                                                         '1 Account' +
                                                                     '</td>' +
                                                                   '</tr>' +
@@ -529,8 +549,8 @@ var Actions = {
                                                                   '</table>' +
                                                                   '</div>' +
                                                                   '<div class="panel-footer">' +
-                                                                    '<a data=' + value.name +' id="get_package_name" class="btn btn-success" role="button" data-toggle="modal" data-target="#payment">Subscribe</a>' +
-                                                                    '1 month FREE trial</div>' +
+                                                                    subscribe_plan +
+                                                                    '</div>' +
                                                                     '</div>' +
                                                                     '</div>' +'');
                     });
@@ -846,7 +866,7 @@ var titleBase = document.title,
         },
         themes: {
             name: "DevDuo",
-            target: "http://subely.com/user/Subely/portfolio?ref=Subely",
+            target: "https://subely.com/user/Subely/portfolio?ref=Subely",
             color: "blue",
             scheme: "dark",
             ajax: !1,
@@ -927,6 +947,10 @@ $(document).ready(function() {
         if(a == 'packages'){
           Components.packages();
         }
+        if(a == 'home')
+        {
+          Components.fillSubs();
+        }
         return Actions.changeView(a), !1
     }), $("body").delegate('a[data-change-lang="true"]', "click", function() {
         var a = $(this).attr("data-lang");
@@ -937,7 +961,7 @@ $(document).ready(function() {
 });
 
 
-$(document).on('click','#check_changes',(function(){
+$(document).on('click','#check_changes',(function(){   
             $.ajax({
                 type: 'GET',
                 url: 'https://api.subely.com/fetch-dropbox-changes',
@@ -946,7 +970,7 @@ $(document).on('click','#check_changes',(function(){
                    console.log(response);
                    $('#display-dropbox-response').text(response);
                    $('#dropbox-response').modal('show');
-
+                  
                 },
                 error: function(response) {
                   console.log('didnt work');
@@ -967,7 +991,7 @@ $(document).ready(function(){
                 success: function (response) {
                    console.log(response);
                    $('#display-user-name').html(response + '<i class="fa fa-angle-right"></i>');
-
+                  
                 },
                 error: function(response) {
                   console.log('no display_name');
@@ -1016,6 +1040,10 @@ var package_name = $("#package-name").val();
                    $('#display-response').text(response);
                    $('#payment').modal('hide');
                    $('#payment-response').modal('show');
+                   if(response == 'Payment Successful')
+                   {
+                      location.reload();
+                   }
                 },
                 error: function(response) {
                   console.log(response);
