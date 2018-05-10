@@ -207,7 +207,7 @@ var Actions = {
                 return Math.floor(Math.random() * (b - a + 1)) + a
             }
 
-            var b = [["Whould you like to work with us?", "Let's create something together! ^1000 <a href='contact' data-change-view='true' class='text-primary'>Get free quote!</a>"]],
+            var b = [["Who is behind Subely? ^1000 <a href='about' data-change-view='true' class='text-primary'>Find out now!</a>", "Need a custom quote? ^1000 <a href='contact' data-change-view='true' class='text-primary'>Get free quote!</a>"]],
                 c = [["Chciałbyś ze mną współpracować?", "Stwórzmy coś razem! ^1000 <a href='contact' data-change-view='true' class='text-primary'>Otrzymaj darmową wycenę!</a>"]],
                 d = $("#typing-text"),
                 e = function() {
@@ -478,6 +478,18 @@ var titleBase = document.title,
             ajax: !0,
             external: !1,
             loaded: !1
+        },
+        about: {
+          index: 9,
+          name: "About Us",
+          "name-pl": "Portfolio",
+          target: "about.html",
+          color: "blue",
+          scheme: "dark",
+          ajax: !0,
+          external: !1,
+          loaded: !1,
+          headerType: "portable"
         },
         contact: {
             index: 6,
