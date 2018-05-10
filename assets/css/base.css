@@ -6660,6 +6660,203 @@ body.popup-open #contact .contact-popup .popup-wrapper {
   margin: 0 30px 40px;
 }
 
+/* About Us
+  -------------------------------------------- */
+#about {
+}
+
+#about .about-bgs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+#about .about-bgs *:not(:first-child) {
+  -webkit-transition: all 1s;
+  -moz-transition: all 1s;
+  -o-transition: all 1s;
+  transition: all 1s;
+}
+
+#about .about-bgs *:not(:first-child) {
+  visibility: hidden;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+}
+
+#about .about-bgs *.active {
+  visibility: visible;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+/* -----------------------------------------------------------------------------  */
+
+#about .person {
+  width: calc(25% - 100px);
+  cursor: pointer;
+  overflow: hidden;
+  transition: 0.45s;
+  position: relative;
+	margin-left: 100px;
+	margin-right: 100px;
+	text-align: center;
+}
+#about .person-details {
+  padding: 0 20px;
+  box-sizing: border-box;
+  margin-top: -15px;
+  transition: 0.3s;
+}
+#about .person-img {
+  width: 100%;
+}
+#about .person-name {
+  color: #fff;
+  font-size: 2em;
+}
+#about .person-title {
+  /* color: rgba(255, 255, 255, 0.2); */
+  margin-top: 10px;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  letter-spacing: 2px;
+}
+#about .person-list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+}
+#about .person-list:hover .person {
+  opacity: 0.6;
+}
+#about .person:hover {
+  opacity: 1 !important;
+}
+#about .person:before {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: #fbf9bd;
+  content: "";
+  height: 0px;
+  transition: 0.45s;
+}
+#about .person:after {
+  content: "\f2ca";
+  font-family: "Ionicons";
+  font-size: 36px;
+  color: #282828;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  height: 100%;
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  text-align: center;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  left: 0;
+  flex-direction: column;
+}
+
+
+
+/* ----------------------------------------------------------------------------- */
+#about .team .profile p {
+	margin-left: 20px;
+	margin-right: 20px;
+	width: 300px;
+}
+
+#about .person-list .person img {
+	width: 300px;
+	height: 300px;
+	border-radius: 10px;
+}
+
+#about .project-slide {
+  padding-top: 110px;
+  overflow: hidden;
+}
+
+#about .project-slide .image, #about .project-slide .content {
+  position: absolute;
+  bottom: 0;
+  z-index: 2;
+}
+
+#about .project-slide .image {
+  height: 100%;
+  left: 0;
+  width: 70%;
+  text-align: center;
+  -webkit-transform: translateY(60px);
+  -moz-transform: translateY(60px);
+  -ms-transform: translateY(60px);
+  -o-transform: translateY(60px);
+  transform: translateY(60px);
+  -webkit-transition: all 1.7s ease-out;
+  -moz-transition: all 1.7s ease-out;
+  -o-transition: all 1.7s ease-out;
+  transition: all 1.7s ease-out;
+}
+
+#about .project-slide .image > img {
+  max-height: 90%;
+}
+
+#about .project-slide .image.bottom > img {
+  position: relative;
+  top: 100%;
+  -webkit-transform: translate3d(0, -100%, 0);
+  -moz-transform: translate3d(0, -100%, 0);
+  -ms-transform: translate3d(0, -100%, 0);
+  -o-transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, -100%, 0);
+}
+
+#about .project-slide .image.center > img {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translate3d(0, -50%, 0);
+  -moz-transform: translate3d(0, -50%, 0);
+  -ms-transform: translate3d(0, -50%, 0);
+  -o-transform: translate3d(0, -50%, 0);
+  transform: translate3d(0, -50%, 0);
+}
+
+#about .project-slide .content {
+  right: 0;
+  padding: 0px 60px 60px 0;
+  width: 30%;
+  float: right;
+  text-align: right;
+  -webkit-transition: all 0.4s ease-out;
+  -moz-transition: all 0.4s ease-out;
+  -o-transition: all 0.4s ease-out;
+  transition: all 0.4s ease-out;
+}
+
+#about .project-slide .content h1 {
+  margin-bottom: 0;
+}
+
+#about .project-slide.swiper-slide-active .image {
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  -o-transform: translateY(0);
+  transform: translateY(0);
+}
+
+
 /* Portfolio
 	------------------------------------------- */
 #portfolio {
