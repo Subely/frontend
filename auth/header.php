@@ -26,7 +26,7 @@ use Kunnu\Dropbox\DropboxApp;
 //Configure Dropbox Application  //
 // Used creditionals of TMG
 
-$app = new DropboxApp("k5lm6p6k0gzfo14", "zw3e47ugo1pwfdp");
+$app = new DropboxApp("3naerq00ohhrfbb", "fs91lwfc09ed1of");
 
 //Configure Dropbox service
 $dropbox = new Dropbox($app);
