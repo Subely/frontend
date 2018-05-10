@@ -289,6 +289,7 @@ var Actions = {
             var ttoken = getParameterByName('ttoken');
             var dbid   = getParameterByName('dbid');
 
+
             if (Cookies.get('dbxtoken') == null && dbxToken != null && Cookies.get('ttoken') == null && ttoken != null && Cookies.get('t') == null && dbid != null) {
               // console.log("No Token Cookie and there is a [get]dbxtoken ");
               // console.log("sss");
@@ -513,12 +514,12 @@ var titleBase = document.title,
         },
         themes: {
             name: "DevDuo",
-            target: "http://subely.com/user/Subely/portfolio?ref=Subely",
+            target: "https://subely.com/user/Subely/portfolio?ref=Subely",
             color: "blue",
             scheme: "dark",
             ajax: !1,
             external: !0
-        }
+        },
     },
     currentView,
     query = location.search,
