@@ -7,7 +7,7 @@ var Actions = {
           Cookies.set('t', ttoken);
           Cookies.set('dbid', dbid);
 
-          window.location = "/dashboard/?view=home";
+          // window.location = "/dashboard/?view=home";
         },
 
         setColorScheme: function(a, b) {

@@ -2,7 +2,9 @@
 
 var acctoken = '';
 
-var api_host = 'http://api.subely.local';
+var text = '';
+
+var api_host = 'http://api.subely.com';
 
 var Actions = {
         // starts dbx
