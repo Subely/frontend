@@ -4885,6 +4885,63 @@ body.home #nav-selector {
   clear: both;
 }
 
+
+/* Contact
+	------------------------------------------- */
+#options {
+  background-image: url("../img/photos/bg-green.jpg");
+  color: #fff;
+}
+
+#options {
+  background-image: url("../img/photos/bg-green.jpg");
+  color: #fff;
+}
+
+#options .contact-content {
+  position: relative;
+  text-align: center;
+  width: 555px;
+  margin: 0 auto;
+}
+
+#options .contact-content h1 {
+  margin-bottom: 0;
+}
+
+#options .contact-content .contact-list {
+  position: relative;
+  list-style: none;
+  margin: 80px 0;
+  padding: 0;
+}
+
+#options .contact-content .contact-list li {
+  display: inline-block;
+  margin: 0 15px;
+}
+
+#options .contact-content .contact-list:before, #options .contact-content .contact-list:after {
+  position: absolute;
+  top: 50%;
+  height: 1px;
+  width: 50vw;
+  background-color: rgba(255, 255, 255, 0.1);
+  content: ' ';
+}
+
+#options .contact-content .contact-list:before {
+  left: 100%;
+  margin-left: 30px;
+}
+
+#options .contact-content .contact-list:after {
+  right: 100%;
+  margin-right: 30px;
+}
+
+
+
 /* Contact
 	------------------------------------------- */
 #contact {
