@@ -502,6 +502,19 @@ var titleBase = document.title,
             external: !1,
             loaded: !1
         },
+        options: {
+            //BHY!!!
+            //Not Sure if this Index is correct
+            index: 6,
+            name: "Options",
+            "name-pl": "Kontakt",
+            target: "options.html",
+            color: "blue",
+            scheme: "dark",
+            ajax: !0,
+            external: !1,
+            loaded: !1
+        },
         signin: {
             index: 5,
             name: "Sign In",
