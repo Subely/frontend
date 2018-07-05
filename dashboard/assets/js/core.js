@@ -4,7 +4,12 @@ var acctoken = '';
 
 var text = '';
 
-var api_host = 'http://api.subely.com';
+var api_host = '/auth/api.php?endpoint=';
+
+var udata = {
+      token: "#tk",
+
+    };
 
 var Actions = {
         // starts dbx
@@ -12,6 +17,29 @@ var Actions = {
           localStorage['dbxToken'] == null ? (localStorage['dbxToken'] = dbxToken) : null;
          // Cookies.get('t') == null ? (Cookies.get('t') = t) : null;
            $.session.get("t") == null ? (sessionStorage.setItem('t', t)) : null;
+        },
+        setUData: function() {
+
+          var dbid = Cookies.get('dbid');
+
+          var cookie_udata = Cookies.get('udata');
+          if (cookie_udata != udata){
+            $.ajax({
+                type: 'GET',
+                url: api_host + '/display_name?dbid='+ dbid,
+                dataType: 'json',
+                success: function (response) {
+                  udata.displayname = response;
+                  Cookies.set('udata', JSON.stringify(udata));
+                  // console.log(response);
+                },
+                error: function(response) {
+                  console.log('no display_name');
+                }
+            });
+          }
+          $('#display-user-name').html(JSON.parse(cookie_udata).displayname + '<i class="fa fa-angle-right"></i>');
+          console.log(JSON.parse(cookie_udata).displayname);
         },
         getToken: function() {
           var token = Cookies.get('t');
@@ -40,8 +68,9 @@ var Actions = {
         getUID: function() {
           var dbid = null;
 
-          // console.log("sss");
+          console.log("Connecting Dropbox: new Dropbox()...");
           var dbx = new Dropbox({ accessToken: Cookies.get('dbxtoken') });
+          console.log("Connected");
           if (Cookies.get('uid') == null) {
             var current_account = (dbx.usersGetCurrentAccount());
             // dbid = current_account._result.account_id;
@@ -606,6 +635,7 @@ var Actions = {
 
             Actions.getToken();
             Actions.getUID();
+            Actions.setUData();
 
             //dbxlogin
             if (currentView == 'dbxlogin'){
@@ -995,27 +1025,6 @@ $(document).on('click','#check_changes',(function(){
             });
 
 }));
-
-$(document).ready(function(){
-
-     var dbid = Cookies.get('dbid');
-
-      $.ajax({
-                type: 'GET',
-                url: 'https://api.subely.com/display_name?dbid='+ dbid,
-                dataType: 'json',
-                success: function (response) {
-                   console.log(response);
-                   $('#display-user-name').html(response + '<i class="fa fa-angle-right"></i>');
-
-                },
-                error: function(response) {
-                  console.log('no display_name');
-                }
-
-            });
-});
-
 
 if(currentView === 'packages'){
     Components.packages();
