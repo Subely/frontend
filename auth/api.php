@@ -1,5 +1,7 @@
 <?php
+// Added by Jamil
 // for detecting host and protocol so that it works on local and live
+
 $current_server = $_SERVER['SERVER_NAME'];
 
 if($current_server=='localhost' || $current_server=='api.subely.dev')
