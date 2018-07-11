@@ -1,16 +1,30 @@
 <?php
+// for detecting host and protocol so that it works on local and live
+$current_server = $_SERVER['SERVER_NAME'];
 
-	if ($_SERVER['SERVER_PORT'] == 443){
+if($current_server=='localhost' || $current_server=='api.subely.dev')
+{
+		$protocal = 'http://';
+		$host = "api.subely.dev";
+}
+ else
+ {
+ 	$host = "api.subely.com";
+	if ($_SERVER['SERVER_PORT'] == 443)
+	{
 	  $protocal = 'https://';
-	} else {
+	}
+	else
+	{
 	  $protocal = 'http://';
 	}
-
-
-	$protocal = 'https://';
-	$apiURL = $protocal."api.subely.com";
-
+}
+	
+$apiURL = $protocal.$host;
+if(isset($_GET['endpoint']))
   $endpoint_url = $apiURL . $_GET['endpoint'];
+else
+	$endpoint_url = $apiURL;
 
 if ($_POST) {
   echo "post";
