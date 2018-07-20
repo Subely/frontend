@@ -4,12 +4,42 @@ var acctoken = '';
 
 var text = '';
 
+var api_host = '/auth/api.php?endpoint=';
+
+var udata = {
+      token: "#tk",
+
+    };
+
 var Actions = {
         // starts dbx
         dbxToken: function(dbxToken='', t='') {
           localStorage['dbxToken'] == null ? (localStorage['dbxToken'] = dbxToken) : null;
          // Cookies.get('t') == null ? (Cookies.get('t') = t) : null;
            $.session.get("t") == null ? (sessionStorage.setItem('t', t)) : null;
+        },
+        setUData: function() {
+
+          var dbid = Cookies.get('dbid');
+
+          var cookie_udata = Cookies.get('udata');
+          if (cookie_udata != udata){
+            $.ajax({
+                type: 'GET',
+                url: api_host + '/display_name?dbid='+ dbid,
+                dataType: 'json',
+                success: function (response) {
+                  udata.displayname = response;
+                  Cookies.set('udata', JSON.stringify(udata));
+                  // console.log(response);
+                },
+                error: function(response) {
+                  console.log('no display_name');
+                }
+            });
+          }
+          $('#display-user-name').html(JSON.parse(cookie_udata).displayname + '<i class="fa fa-angle-right"></i>');
+          console.log(JSON.parse(cookie_udata).displayname);
         },
         getToken: function() {
           var token = Cookies.get('t');
@@ -38,8 +68,9 @@ var Actions = {
         getUID: function() {
           var dbid = null;
 
-          // console.log("sss");
+          console.log("Connecting Dropbox: new Dropbox()...");
           var dbx = new Dropbox({ accessToken: Cookies.get('dbxtoken') });
+          console.log("Connected");
           if (Cookies.get('uid') == null) {
             var current_account = (dbx.usersGetCurrentAccount());
             // dbid = current_account._result.account_id;
@@ -50,10 +81,10 @@ var Actions = {
               acctoken = dbid;
 
               //console.log('https://api.subely.com/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'');
-              
+
               $.ajax({
                   type: 'GET',
-                  url: 'https://api.subely.com/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'',
+                  url: api_host + '/dbxusers/get/uid/'+ dbid +'?access_token=' + Actions.getToken()+'',
                   data: 'data',
                   dataType: 'json',
                   success: function (response) {
@@ -201,7 +232,7 @@ var Actions = {
           a.on('keyup', function() {
             $.ajax({
                 type: 'GET',
-                url: 'https://api.subely.com/dbxusers/sub/verify/' + this.value,
+                url: api_host + '/dbxusers/sub/verify/' + this.value,
                 data: 'data',
                 dataType: 'json',
                 success: function (response) {
@@ -223,7 +254,7 @@ var Actions = {
           b.click(function(){
               b.text("Please Wait");
               b.prop('disabled', true);
-              $.post("https://api.subely.com/dbxusers/add/subs",
+              $.post(api_host + "/dbxusers/add/subs",
               {
                   access_token: Actions.getToken(),
                   user_id: Cookies.get('uid'),
@@ -267,7 +298,7 @@ var Actions = {
          if($('#subs-table').length < 1){
           $.ajax({
               type: 'GET',
-              url: 'https://api.subely.com/dbxusers/get/subs/'+ Cookies.get('uid') +'?access_token=' + Actions.getToken(),
+              url: api_host + '/dbxusers/get/subs/'+ Cookies.get('uid') +'?access_token=' + Actions.getToken(),
               data: 'data',
               dataType: 'json',
               success: function (response) {
@@ -309,7 +340,7 @@ var Actions = {
 
                     $.ajax({
                         type: 'GET',
-                        url: 'https://api.subely.com/dbxusers/delete/sub/' + current_sub + '?access_token='+Actions.getToken(),
+                        url: api_host + '/dbxusers/delete/sub/' + current_sub + '?access_token='+Actions.getToken(),
                         data: {
                           'deletefromdropbox': deletefromdropbox,
                         },
@@ -322,8 +353,13 @@ var Actions = {
                   });
               },
               error: function(response) {
-                console.log('faileds');
-
+                console.log('Failed');
+                Cookies.remove('t');
+                Cookies.remove('uid');
+                Cookies.remove('dbid');
+                Cookies.remove('dbxtoken');
+                localStorage.clear();
+                window.location = "/?view=dbxlogin";
               }
           });
 
@@ -486,7 +522,7 @@ var Actions = {
                     if(value.id == check_plan.id)
                     {
                        subscribe_plan = '<a data=' + value.name +' class="btn btn-success" role="button">Subscribed</a>';
-                    }  
+                    }
                     if(value.id != check_plan.id && value.folders > check_plan.folders)
                     {
                        subscribe_plan = '<a data=' + value.name +' id="get_package_name" class="btn btn-info" role="button" data-toggle="modal" data-target="#payment">Upgrade</a>';
@@ -517,7 +553,14 @@ var Actions = {
                                                               '</div>' +
                                                               '<table class="table">' +
                                                                  '<tr>' +
-                                                                    '<td>' + 
+                                                                    '<td>' +
+                                                          // '<h1> $' + free +
+                                                          //   '<span class="subscript">/mo</span></h1>' +
+                                                          //        '<small>1 month FREE trial</small>' +
+                                                          //     '</div>' +
+                                                          //     '<table class="table">' +
+                                                          //        '<tr>' +
+                                                          //           '<td>' +
                                                                         '1 Account' +
                                                                     '</td>' +
                                                                   '</tr>' +
@@ -551,6 +594,8 @@ var Actions = {
                                                                   '<div class="panel-footer">' +
                                                                     subscribe_plan +
                                                                     '</div>' +
+                                                                    // '<a data=' + value.name +' id="get_package_name" class="btn btn-success" role="button" data-toggle="modal" data-target="#payment">Subscribe</a>' +
+                                                                    // '1 month FREE trial</div>' +
                                                                     '</div>' +
                                                                     '</div>' +'');
                     });
@@ -590,6 +635,7 @@ var Actions = {
 
             Actions.getToken();
             Actions.getUID();
+            Actions.setUData();
 
             //dbxlogin
             if (currentView == 'dbxlogin'){
@@ -961,7 +1007,7 @@ $(document).ready(function() {
 });
 
 
-$(document).on('click','#check_changes',(function(){   
+$(document).on('click','#check_changes',(function(){
             $.ajax({
                 type: 'GET',
                 url: 'https://api.subely.com/fetch-dropbox-changes',
@@ -970,7 +1016,7 @@ $(document).on('click','#check_changes',(function(){
                    console.log(response);
                    $('#display-dropbox-response').text(response);
                    $('#dropbox-response').modal('show');
-                  
+
                 },
                 error: function(response) {
                   console.log('didnt work');
@@ -979,27 +1025,6 @@ $(document).on('click','#check_changes',(function(){
             });
 
 }));
-
-$(document).ready(function(){
-
-     var dbid = Cookies.get('dbid');
-
-      $.ajax({
-                type: 'GET',
-                url: 'https://api.subely.com/display_name?dbid='+ dbid,
-                dataType: 'json',
-                success: function (response) {
-                   console.log(response);
-                   $('#display-user-name').html(response + '<i class="fa fa-angle-right"></i>');
-                  
-                },
-                error: function(response) {
-                  console.log('no display_name');
-                }
-
-            });
-});
-
 
 if(currentView === 'packages'){
     Components.packages();
